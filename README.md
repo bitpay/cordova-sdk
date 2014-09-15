@@ -1,0 +1,1 @@
+BitPay SDK Cordova/Phonegap Plugin

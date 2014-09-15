@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2014 PayPal. All rights reserved. -->
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:rim="http://www.blackberry.com/ns/widgets"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="com.bitpay.sdk"
+    version="0.1">
+    <name>BitPay SDK</name>
+    <description>This plugin allows to add to interact with BitPay</description>
+    <license>MIT License, see LICENSE.md for details</license>
+    <engines>
+            <engine name="cordova" version="&gt;=3.0.0" />
+    </engines>
+
+    <js-module src="www/bitpay.js" name="BitPay">
+        <clobbers target="BitPay" />
+    </js-module>
+
+</plugin>
