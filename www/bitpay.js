@@ -5,7 +5,6 @@
 */
 function BitPay(privateKey) {
   this.privateKey = privateKey;
-  this.client = {};
 };
 
 /**
@@ -15,7 +14,7 @@ BitPay.prototype.createInvoice = function(amount, currency, cb) {
   var onSuccess = function() {
     var invoice = {
       id: 12,
-      status: 'pending',
+      status: 'new',
       amount: amount,
       currency: currency,
       bitcoins: 0.34,
@@ -27,18 +26,19 @@ BitPay.prototype.createInvoice = function(amount, currency, cb) {
   setTimeout(onSuccess, 0);
 };
 
-/**
-* Creates an invoice for your customer.
-*/
-BitPay.prototype.showPaymentModal = function(invoice, onSuccess, onError) {
+BitPay.prototype.createInvoice = function(invoiceId, cb) {
+  var onSuccess = function() {
+    var invoice = {
+      id: invoiceId,
+      status: 'paid',
+      url: 'http://test.bitpay.com/payment/the-invoice-id',
+      btcPrice: 0.123
+    };
+    cb(null, invoice);
+  };
 
-}
+  setTimeout(onSuccess, 0);
+};
 
-/**
-* Returns a base64 enconded QR code for the payment.
-*/
-BitPay.prototype.getQRCode = function(invoice) {
-  return 'base64';
-}
 
 module.exports = BitPay;
