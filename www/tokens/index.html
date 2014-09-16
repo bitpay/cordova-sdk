@@ -19,16 +19,16 @@
             port: 443
         };
 
-        var params = {
-          id: SIN.priv, // not sure about this
-          facade: 'pos',
-          label: 'cordova'
-        }
+        // var params = {
+        //   id: SIN.priv, // not sure about this
+        //   facade: 'pos',
+        //   label: 'cordova'
+        // }
 
-        var client = BitpayRPCClient(server, { facade: 'public' });
-        client.request( 'createToken', params, function(err, data){
-            console.log(err, data);
-        });
+        // var client = BitpayRPCClient(server, { facade: 'public' });
+        // client.request( 'createToken', params, function(err, data){
+        //     console.log(err, data);
+        // });
 
         document.write('<h2>Development</h2>');
         document.write('SIN: ', SIN.sin, '<br>');
