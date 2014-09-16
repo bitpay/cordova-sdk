@@ -1,6 +1,6 @@
 # BitPay SDK Cordova/Phonegap Plugin
 
-Please go to http://test.bitpay.com to create an account. After registrarion, depending the kind of application you are building the pairing process you'll need to follow.
+Please go to http://test.bitpay.com to create an account. After registration, depending on the kind of application you are building you may need to go through a pairing process.
 
 # Install the SDK plugin
 
@@ -18,7 +18,7 @@ Open the sdk folder and excecute the pairing utility using the created token.
     Your client key is:
     70163c90f18df866d7a4ec3b8f7215f0013e3f81749f6222938a1f4d9ce3e97e
     
-Now copy that client key and distribute it with the consumer app. It will be used to instanciate the bipay client as follows:
+Now copy that client key and distribute it with the consumer app. It will be used to instantiate the bitpay client as follows:
 
     var CLIENT_KEY = '70163c90f...';
     var bitpay = new Bitpay({
@@ -49,7 +49,6 @@ Now your app is ready to generate invoices and track their state:
         //   btcPrice: 0.123
         // }
     }
-    
 
 To read more about invoices refer to the BitPay's [API documentation](https://test.bitpay.com/downloads/bitpayApi.pdf)
 
