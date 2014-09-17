@@ -90,7 +90,7 @@ Now your app is ready to generate invoices and track their state:
        if ( error ) throw error;
        // do something with the invoice response
     });
-
+```
 
 ## Listening for Invoice Payment Events
 
