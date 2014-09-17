@@ -10,7 +10,7 @@
 * @param {object} label - A label for the client identity.
 */
 
-var bitauth = cordova.require('com.bitpay.cordova.BitAuth');
+var bitauth = cordova.require('com.bitpay.sdk.cordova.BitAuth');
 
 var BitpayClientId = function(data){
 

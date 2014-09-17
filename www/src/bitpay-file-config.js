@@ -41,7 +41,7 @@
 *
 */
 
-var BitpayClientId = cordova.require('com.bitpay.cordova.ClientId');
+var BitpayClientId = cordova.require('com.bitpay.sdk.cordova.ClientId');
 
 var BitpayFileConfig = function(data){
 }

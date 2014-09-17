@@ -33,9 +33,9 @@
 * @param {object} data - Configuration for the invoice as demonstrated in the example.
 */
 
-var BitpayRPCClient = cordova.require('com.bitpay.cordova.RPCClient');
-var CustomEvent = cordova.require('com.bitpay.cordova.CustomEvent');
-var QRCode = cordova.require('com.bitpay.cordova.QRCode');
+var BitpayRPCClient = cordova.require('com.bitpay.sdk.cordova.RPCClient');
+var CustomEvent = cordova.require('com.bitpay.sdk.cordova.CustomEvent');
+var QRCode = cordova.require('com.bitpay.sdk.cordova.QRCode');
 
 var BitpayInvoice = function(server, params, data){
 

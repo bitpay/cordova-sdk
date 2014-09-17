@@ -48,7 +48,7 @@
 *
 */
 
-var BitpayClientId = cordova.require('com.bitpay.cordova.ClientId');
+var BitpayClientId = cordova.require('com.bitpay.sdk.cordova.ClientId');
 
 var BitpayLocalstorageConfig = function(data){
   this.storage = window.localStorage;

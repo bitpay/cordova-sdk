@@ -51,3 +51,5 @@
     );
   }
 }(window));
+
+module.exports = window.CustomEvent;

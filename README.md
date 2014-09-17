@@ -16,7 +16,7 @@ $ cordova plugin add https://github.com/bitpay/cordova-skd.git
 First, we'll need to setup a client using the merchant facade to create a token that can be included with the application when it's distributed and use the point-of-sale facade that only has the capability to create invoices. To do this we'll need a public/private key pair.
 
 ```
-$ cd plugins/com.bitpay.cordova/bin
+$ cd plugins/com.bitpay.sdk.cordova/bin
 $ ./bitpay keygen
 ```
 
@@ -47,7 +47,7 @@ To require the BitPay JavaScript into your application you can do the following:
 
 document.addEventListener("deviceready", function(){
 
-   var BitpayRPCClient = cordova.require('com.bitpay.cordova.RPCClient');
+   var BitpayRPCClient = cordova.require('com.bitpay.sdk.cordova.RPCClient');
 
    ...
 
@@ -115,7 +115,7 @@ We have a JavaScript element that can be used to easily create invoices and atta
 
 ```
 
-   var BitpayInvoice = cordova.require('com.bitpay.cordova.Invoice');
+   var BitpayInvoice = cordova.require('com.bitpay.sdk.cordova.Invoice');
 
    var request = new BitpayInvoice({
       price: 100.00,
