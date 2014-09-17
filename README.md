@@ -47,7 +47,7 @@ To require the BitPay JavaScript into your application you can do the following:
 
 document.addEventListener("deviceready", function(){
 
-   var BitpayRPCClient = cordova.require('com.bitpay.cordova.BitpayRPCClient');
+   var BitpayRPCClient = cordova.require('com.bitpay.cordova.RPCClient');
 
    ...
 
@@ -95,7 +95,7 @@ Now your app is ready to generate invoices and track their state:
 
 ```
     var publicClient = new BitpayRPCClient({
-        host: 'test.bitpay.com,
+        host: 'test.bitpay.com',
         port: 443,
         facade: 'public'
     });
@@ -115,7 +115,7 @@ We have a JavaScript element that can be used to easily create invoices and atta
 
 ```
 
-   var BitpayInvoice = cordova.require('com.bitpay.cordova.BitpayInvoice');
+   var BitpayInvoice = cordova.require('com.bitpay.cordova.Invoice');
 
    var request = new BitpayInvoice({
       price: 100.00,

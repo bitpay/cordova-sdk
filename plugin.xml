@@ -26,23 +26,23 @@
         <runs/>
     </js-module>
 
-    <js-module src="www/src/bitpay-client-id.js" name="BitpayClientId">
+    <js-module src="www/src/bitpay-client-id.js" name="ClientId">
         <runs/>
     </js-module>
 
-    <js-module src="www/src/bitpay-file-config.js" name="BitpayFileConfig">
+    <js-module src="www/src/bitpay-file-config.js" name="FileConfig">
         <runs/>
     </js-module>
 
-    <js-module src="www/src/bitpay-localstorage-config.js" name="BitpayLocalstorageConfig">
+    <js-module src="www/src/bitpay-localstorage-config.js" name="LocalstorageConfig">
         <runs/>
     </js-module>
 
-    <js-module src="www/src/bitpay-rpc-client.js" name="BitpayRPCClient">
+    <js-module src="www/src/bitpay-rpc-client.js" name="RPCClient">
         <runs/>
     </js-module>
 
-    <js-module src="www/src/bitpay-invoice.js" name="BitpayInvoice">
+    <js-module src="www/src/bitpay-invoice.js" name="Invoice">
         <runs/>
     </js-module>
 

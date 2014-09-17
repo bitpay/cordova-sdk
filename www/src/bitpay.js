@@ -1,9 +1,17 @@
 'use strict'
 
-var RPCClient = require('com.bitpay.cordova.RPCClient');
-var ClientId = require('com.bitpay.cordova.ClientId');
-var Invoice = require('com.bitpay.cordova.Invoice');
-var Storage = require('com.bitpay.cordova.Storage');
+/**
+*
+* BitPay JS
+*
+* Helper functions when using the BitPay API
+*
+*/
+
+var RPCClient = cordova.require('com.bitpay.cordova.RPCClient');
+var ClientId = cordova.require('com.bitpay.cordova.ClientId');
+var Invoice = cordova.require('com.bitpay.cordova.Invoice');
+var Storage = cordova.require('com.bitpay.cordova.Storage');
 
 /**
 * Creates a Bitpay instance with your merchant private key.
