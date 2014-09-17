@@ -220,3 +220,5 @@ BitpayLocalstorageConfig.prototype._set = function(key, value) {
   var data = JSON.stringify( value );
   this.storage.setItem(key, data);
 }
+
+module.exports = BitpayLocalstorageConfig;

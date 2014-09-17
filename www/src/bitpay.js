@@ -1,16 +1,21 @@
 'use strict'
 
+var RPCClient = require('com.bitpay.cordova.RPCClient');
+var ClientId = require('com.bitpay.cordova.ClientId');
+var Invoice = require('com.bitpay.cordova.Invoice');
+var Storage = require('com.bitpay.cordova.Storage');
+
 /**
 * Creates a Bitpay instance with your merchant private key.
 */
-function BitPay(privateKey) {
+function Bitpay(privateKey) {
   this.privateKey = privateKey;
 };
 
 /**
 * Creates an invoice for your customer.
 */
-BitPay.prototype.createInvoice = function(amount, currency, cb) {
+Bitpay.prototype.createInvoice = function(amount, currency, cb) {
   var onSuccess = function() {
     var invoice = {
       id: 12,
@@ -26,7 +31,7 @@ BitPay.prototype.createInvoice = function(amount, currency, cb) {
   setTimeout(onSuccess, 0);
 };
 
-BitPay.prototype.createInvoice = function(invoiceId, cb) {
+Bitpay.prototype.getInvoice = function(invoiceId, cb) {
   var onSuccess = function() {
     var invoice = {
       id: invoiceId,
@@ -41,4 +46,4 @@ BitPay.prototype.createInvoice = function(invoiceId, cb) {
 };
 
 
-module.exports = BitPay;
+module.exports = Bitpay;

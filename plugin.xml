@@ -14,35 +14,36 @@
 
     <dependency id="com.borismus.webintent" url="https://github.com/Initsogar/cordova-webintent" commit="3d12378de9f38be900761a0ad06ab697cf6d9add" />
 
-    <js-module src="www/dist/bitauth.browser.min.js" name="BitAuth">
-        <clobbers target="BitAuth" />
+    <js-module src="www/dist/bitauth.browser.min.js" name="BitAuth"> 
+       <runs/>
     </js-module>
 
     <js-module src="www/dist/custom-event-polyfill.js" name="CustomEvent">
-        <clobbers target="CustomEvent" />
+        <runs/>
     </js-module>
 
     <js-module src="www/dist/qrcode.js" name="QRCode">
-        <clobbers target="QRCode" />
+        <runs/>
     </js-module>
 
-    <js-module src="www/bitpay-client-id.js" name="BitpayClientId">
-        <clobbers target="BitpayClientId" />
+    <js-module src="www/src/bitpay-client-id.js" name="BitpayClientId">
+        <runs/>
     </js-module>
 
-    <js-module src="www/bitpay-file-config.js" name="BitpayFileConfig">
-        <clobbers target="BitpayFileConfig" />
+    <js-module src="www/src/bitpay-file-config.js" name="BitpayFileConfig">
+        <runs/>
     </js-module>
 
-    <js-module src="www/bitpay-localstorage-config.js" name="BitpayLocalstorageConfig">
-        <clobbers target="BitpayLocalstorageConfig" />
+    <js-module src="www/src/bitpay-localstorage-config.js" name="BitpayLocalstorageConfig">
+        <runs/>
     </js-module>
 
-    <js-module src="www/bitpay-rpc-client.js" name="BitpayRPCClient">
-        <clobbers target="BitpayRPCClient" />
+    <js-module src="www/src/bitpay-rpc-client.js" name="BitpayRPCClient">
+        <runs/>
     </js-module>
 
-    <js-module src="www/bitpay-invoice.js" name="BitpayInvoice">
-        <clobbers target="BitpayInvoice" />
+    <js-module src="www/src/bitpay-invoice.js" name="BitpayInvoice">
+        <runs/>
     </js-module>
+
 </plugin>

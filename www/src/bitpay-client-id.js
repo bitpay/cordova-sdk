@@ -71,3 +71,5 @@ var BitpayClientId = function(data){
   }
 
 }
+
+module.exports = BitpayClientId;

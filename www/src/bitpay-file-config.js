@@ -64,3 +64,5 @@ BitpayFileConfig.prototype.saveToken = function(data){
 
 BitpayFileConfig.prototype.getToken = function(query){
 }
+
+module.exports = BitpayFileConfig;

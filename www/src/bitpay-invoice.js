@@ -349,3 +349,5 @@ BitpayInvoice.prototype.getQrCode = function(callback, format){
   }
 
 }
+
+module.exports = BitpayInvoice;

@@ -103,3 +103,5 @@ BitpayRPCClient.prototype.request = function(method, params, callback){
   xhr.send(data);
 
 }
+
+module.exports = BitpayRPCClient;

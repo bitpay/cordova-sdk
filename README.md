@@ -38,7 +38,24 @@ $ ./bitpay request -T merchant -M createPublicPOSToken '{"label": "my-distribute
 
 It will output a token, and you can include this into your app.
 
-It will be used to instantiate the bitpay client as follows:
+
+## Setting Up
+
+To require the BitPay JavaScript into your application you can do the following:
+
+```
+
+document.addEventListener("deviceready", function(){
+
+   var BitpayRPCClient = cordova.require('com.bitpay.cordova.BitpayRPCClient');
+
+   ...
+
+})
+
+```
+
+You can then use this to instantiate a BitPay client as follows:
 
 ```
     var posClient = new BitpayRPCClient({
@@ -97,6 +114,9 @@ Now your app is ready to generate invoices and track their state:
 We have a JavaScript element that can be used to easily create invoices and attach custom events on successful payment.
 
 ```
+
+   var BitpayInvoice = cordova.require('com.bitpay.cordova.BitpayInvoice');
+
    var request = new BitpayInvoice({
       price: 100.00,
       currency: "USD",
