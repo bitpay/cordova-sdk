@@ -4,51 +4,112 @@ Please go to http://test.bitpay.com to create an account. After registration, de
 
 # Install the SDK plugin
 
-    $ cordova plugin add https://github.com/bitpay/cordova-skd.git
+```
+$ cordova plugin add https://github.com/bitpay/cordova-skd.git
 
-## Generate Application Key
+```
+
+## Generate A Point-of-Sale Token to Distribute
+
 **Use case:** Generating and tracking invoices.
 
-Go to [*My Account* > *API Tokens*](https://test.bitpay.com/api-tokens) section. Under *Tokens* create a new token with label `mobile` and facade `Point-of-Sale`.
+First, we'll need to setup a client using the merchant facade to create a token that can be included with the application when it's distributed and use the point-of-sale facade that only has the capability to create invoices. To do this we'll need a public/private key pair.
 
-Open the sdk folder and excecute the pairing utility using the created token.
+```
+$ cd plugins/com.bitpay.cordova/bin
+$ ./bitpay keygen
+```
 
-    $ cd plugins/com.bitpay.skd/bin
-    $ ./createClientKey <token>
-    Your client key is:
-    70163c90f18df866d7a4ec3b8f7215f0013e3f81749f6222938a1f4d9ce3e97e
-    
-Now copy that client key and distribute it with the consumer app. It will be used to instantiate the bitpay client as follows:
+It should output the Client ID (`<client_id>`) which you can insert into the following command:
 
-    var CLIENT_KEY = '70163c90f...';
-    var bitpay = new Bitpay({
-        key: CLIENT_KEY,
-        server: 'http://test.bitpay.com',
-        port: 443
+```
+$ ./bitpay request -T public -M createToken '{"id": "<client_id>", "facade": "merchant"}'
+```
+
+This will output a token, and importantly a pairing code.
+
+Go to [*My Account* > *API Tokens*](https://test.bitpay.com/api-tokens) and enter the pairing code, and approve the request.
+
+You should now be able to use the fully capabale merchant API to create a point-of-sale token that can be included in application distribution.
+
+```
+$ ./bitpay request -T merchant -M createPublicPOSToken '{"label": "my-distributed-app-token"}'
+```
+
+It will output a token, and you can include this into your app.
+
+It will be used to instantiate the bitpay client as follows:
+
+```
+    var posClient = new BitpayRPCClient({
+        host: 'test.bitpay.com,
+        port: 443,
+        facade: 'pos',
+        token: '70163c90f...'
     });
 
-## Using the SDK
+```
+
+## Creating an Invoice
 Now your app is ready to generate invoices and track their state:
 
+```
     // Create Invoice
-    bitpay.createInvoice({
+    posClient.request('createInvoice', {
         price: 123.5,
         currency: "USD"
-    }, logInvoice);
+    }, function(error, invoice){
+      if (error) throw error;
+
+      // log the output
+      console.log(invoice);
+
+      // Invoice {
+      //   id: 'the-invoice-id'
+      //   url: 'http://test.bitpay.com/payment/the-invoice-id'
+      //   status: 'new'
+      //   btcPrice: 0.123
+      // }
+
+    });
+```
+
+## Getting an Invoice
+
+```
+    var publicClient = new BitpayRPCClient({
+        host: 'test.bitpay.com,
+        port: 443,
+        facade: 'public'
+    });
 
     // Track their state    
-    bitpay.getInvoice('the-invoice-id', logInvoice);
-    
-    function logInvoice(error, invoice) {
-        if (error) throw error;
-        console.log(invoice);
-        // Invoice {
-        //   id: 'the-invoice-id'
-        //   url: 'http://test.bitpay.com/payment/the-invoice-id'
-        //   status: 'new'
-        //   btcPrice: 0.123
-        // }
-    }
+    publicClient.request('getInvoice', {
+      invoiceId: <invoice_id>,
+    }, function(error, invoice){
+       if ( error ) throw error;
+       // do something with the invoice response
+    });
+
+
+## Listening for Invoice Payment Events
+
+We have a JavaScript element that can be used to easily create invoices and attach custom events on successful payment.
+
+```
+   var request = new BitpayInvoice({
+      price: 100.00,
+      currency: "USD",
+      onpayment: function(e){
+          // do something when the invoice has been paid
+      },
+      <pos_token>, 
+      function(err, invoice) {
+        // do something with the invoice element when created
+      }
+   })
+
+```
 
 To read more about invoices refer to the BitPay's [API documentation](https://test.bitpay.com/downloads/bitpayApi.pdf)
 
