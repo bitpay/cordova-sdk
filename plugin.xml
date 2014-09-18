@@ -12,8 +12,6 @@
         <engine name="cordova" version="&gt;=3.0.0" />
     </engines>
 
-    <dependency id="com.borismus.webintent" url="https://github.com/Initsogar/cordova-webintent" commit="3d12378de9f38be900761a0ad06ab697cf6d9add" />
-
     <js-module src="www/dist/bitauth.browser.min.js" name="BitAuth"> 
        <runs/>
     </js-module>
@@ -45,5 +43,12 @@
     <js-module src="www/src/bitpay-invoice.js" name="Invoice">
         <runs/>
     </js-module>
+
+    <platform name="android">
+
+      <dependency id="com.borismus.webintent" url="https://github.com/Initsogar/cordova-webintent" commit="3d12378de9f38be900761a0ad06ab697cf6d9add" />
+
+    </platform>
+
 
 </plugin>
