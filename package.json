@@ -1,0 +1,20 @@
+{
+  "name": "bitpay-cordova-sdk",
+  "description": "BitPay Cordova SDK",
+  "version": "0.0.1",
+  "dependencies": {
+    "bitauth": "=0.1.1",
+    "commander": "=2.3.0",
+    "node-cryptojs-aes": "=0.4.0",
+    "read": "=1.0.5"
+  },
+  "devDependencies": {
+    "mocha": "=1.21.4",
+    "chai": "=1.9.1",
+    "mock-fs": "=2.3.1"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.10"
+  }
+}

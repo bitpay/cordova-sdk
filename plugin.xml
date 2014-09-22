@@ -5,50 +5,68 @@
     id="com.bitpay.sdk.cordova"
     version="0.1">
     <name>BitPay SDK</name>
-    <description>This plugin allows to add to interact with BitPay</description>
+    <description>This plugin includes tools for interacting with the BitPay API</description>
     <license>MIT License, see LICENSE.md for details</license>
 
     <engines>
         <engine name="cordova" version="&gt;=3.0.0" />
     </engines>
 
-    <js-module src="www/dist/bitauth.browser.min.js" name="BitAuth"> 
+    <!-- uncomment to run tests
+    <asset src="node_modules/mocha/mocha.css" target="mocha.css" />
+    <asset src="node_modules/mocha/mocha.js" target="mocha.js" />
+    <asset src="node_modules/chai/chai.js" target="chai.js" />
+    <asset src="test/test.config.js" target="test.config.js" />
+    <asset src="test/test.rpc-client.js" target="test.rpc-client.js" />
+    <asset src="test/test.client-id.js" target="test.client-id.js" />
+    <asset src="test/test.request.js" target="test.request.js" />
+    <asset src="test/test.json-storage.js" target="test.json-storage.js" />
+    <asset src="test/test.invoice.js" target="test.invoice.js" />
+    <asset src="test/test.html" target="index.html" />
+    -->
+
+    <js-module src="dist/bitauth.browser.min.js" name="BitAuth">
        <runs/>
     </js-module>
 
-    <js-module src="www/dist/custom-event-polyfill.js" name="CustomEvent">
+    <js-module src="dist/custom-event-polyfill.js" name="CustomEvent">
         <runs/>
     </js-module>
 
-    <js-module src="www/dist/qrcode.js" name="QRCode">
+    <js-module src="dist/qrcode.js" name="QRCode">
         <runs/>
     </js-module>
 
-    <js-module src="www/src/bitpay-client-id.js" name="ClientId">
+    <js-module src="dist/aes.js" name="CryptoJS">
         <runs/>
     </js-module>
 
-    <js-module src="www/src/bitpay-file-config.js" name="FileConfig">
+    <js-module src="lib/client-id.js" name="ClientId">
         <runs/>
     </js-module>
 
-    <js-module src="www/src/bitpay-localstorage-config.js" name="LocalstorageConfig">
+    <js-module src="lib/json-localstorage.js" name="JSONLocalstorage">
         <runs/>
     </js-module>
 
-    <js-module src="www/src/bitpay-rpc-client.js" name="RPCClient">
+    <js-module src="lib/config.js" name="Config">
         <runs/>
     </js-module>
 
-    <js-module src="www/src/bitpay-invoice.js" name="Invoice">
+    <js-module src="lib/request-xhr.js" name="requestXHR">
+        <runs/>
+    </js-module>
+
+    <js-module src="lib/rpc-client.js" name="RPCClient">
+        <runs/>
+    </js-module>
+
+    <js-module src="lib/invoice.js" name="Invoice">
         <runs/>
     </js-module>
 
     <platform name="android">
-
       <dependency id="com.borismus.webintent" url="https://github.com/Initsogar/cordova-webintent" commit="3d12378de9f38be900761a0ad06ab697cf6d9add" />
-
     </platform>
-
 
 </plugin>

@@ -1,78 +1,74 @@
 # BitPay SDK Cordova/Phonegap Plugin
 
-Please go to http://test.bitpay.com to create an account. After registration, depending on the kind of application you are building you may need to go through a pairing process.
+Please go to https://test.bitpay.com to create an account. After registration, depending on the kind of application you are building you may need to go through a pairing process.
 
 # Install the SDK plugin
 
 ```
-$ cordova plugin add https://github.com/bitpay/cordova-skd.git
+$ cordova plugin add https://github.com/bitpay/cordova-sdk.git
 
 ```
 
 ## Generate A Point-of-Sale Token to Distribute
 
-**Use case:** Generating and tracking invoices.
+**Use case:** Generating and tracking invoices in a distributed application.
 
-First, we'll need to setup a client using the merchant facade to create a token that can be included with the application when it's distributed and use the point-of-sale facade that only has the capability to create invoices. To do this we'll need a public/private key pair.
+Login to https://test.bitpay.com and navigate to [*My Account* > *API Tokens*](https://test.bitpay.com/api-tokens). Click on the *Add New Token* and make a token with the *Point-of-Sale* capability for multiple clients. You can then include this token with your application.
 
-```
-$ cd plugins/com.bitpay.sdk.cordova/bin
-$ ./bitpay keygen
-```
+## Invoices
 
-It should output the Client ID (`<client_id>`) which you can insert into the following command:
-
-```
-$ ./bitpay request -T public -M createToken '{"id": "<client_id>", "facade": "merchant"}'
-```
-
-This will output a token, and importantly a pairing code.
-
-Go to [*My Account* > *API Tokens*](https://test.bitpay.com/api-tokens) and enter the pairing code, and approve the request.
-
-You should now be able to use the fully capabale merchant API to create a point-of-sale token that can be included in application distribution.
-
-```
-$ ./bitpay request -T merchant -M createPublicPOSToken '{"label": "my-distributed-app-token"}'
-```
-
-It will output a token, and you can include this into your app.
-
-
-## Setting Up
-
-To require the BitPay JavaScript into your application you can do the following:
+We can easily create invoices and attach custom events on successful payment, or simply direct to the BitPay invoice url.
 
 ```
 
 document.addEventListener("deviceready", function(){
 
-   var BitpayRPCClient = cordova.require('com.bitpay.sdk.cordova.RPCClient');
+   var Invoice = cordova.require('com.bitpay.sdk.cordova.Invoice');
 
-   ...
+   var invoice = new Invoice({
+     price: 100.00,
+     currency: "USD",
+     token: <pos_token>,
+     server: 'test'
+   })
 
-})
+   invoice.create(function(err){
+     if ( err ) throw err;
+     // do something when the invoice is created
+
+     // add a payment event listener
+     invoice.addEventListener('payment', function(e){
+       // do something when the payment is received
+     })
+
+   })
+
+}
 
 ```
 
-You can then use this to instantiate a BitPay client as follows:
+## Using the API Client
+
+You can instantiate a BitPay client as follows:
 
 ```
-    var posClient = new BitpayRPCClient({
+    var Client = cordova.require('com.bitpay.sdk.cordova.RPCClient');
+
+    var pos = new Client({
         host: 'test.bitpay.com,
         port: 443,
-        facade: 'pos',
-        token: '70163c90f...'
+        token: '70163c90f...' // as retrieved from above, point-of-sale capability
     });
 
 ```
 
-## Creating an Invoice
-Now your app is ready to generate invoices and track their state:
+## Issuing an API Call
+
+Now your app is ready to make API calls:
 
 ```
     // Create Invoice
-    posClient.request('createInvoice', {
+    pos.call('createInvoice', {
         price: 123.5,
         currency: "USD"
     }, function(error, invoice){
@@ -91,48 +87,58 @@ Now your app is ready to generate invoices and track their state:
     });
 ```
 
-## Getting an Invoice
+## Using other Capabilities
 
 ```
-    var publicClient = new BitpayRPCClient({
+    // To use public capabilities, do not pass a token
+    var public = new BitpayRPCClient({
         host: 'test.bitpay.com',
-        port: 443,
-        facade: 'public'
+        port: 443
     });
 
-    // Track their state    
-    publicClient.request('getInvoice', {
+    // Track invoice state
+    public.call('getInvoice', {
       invoiceId: <invoice_id>,
     }, function(error, invoice){
        if ( error ) throw error;
        // do something with the invoice response
     });
-```
 
-## Listening for Invoice Payment Events
-
-We have a JavaScript element that can be used to easily create invoices and attach custom events on successful payment.
-
-```
-
-   var BitpayInvoice = cordova.require('com.bitpay.sdk.cordova.Invoice');
-
-   var request = new BitpayInvoice({
-      price: 100.00,
-      currency: "USD",
-      onpayment: function(e){
-          // do something when the invoice has been paid
-      },
-      <pos_token>, 
-      function(err, invoice) {
-        // do something with the invoice element when created
-      }
-   })
+    // Get the current exchange rates
+    public.call('getRates', null, function(error, rates){
+       if ( error ) throw error;
+       // do something with the rates response
+    });
 
 ```
 
-To read more about invoices refer to the BitPay's [API documentation](https://test.bitpay.com/downloads/bitpayApi.pdf)
+To read more about invoices refer to the BitPay's [API documentation](https://test.bitpay.com/api)
 
-## Sample Application
+## Sample Applications
 
-You can check a sample music store app using the SDK [here](https://github.com/bitpay/sample-cordova-skd.git).
+- Music store app using the SDK [here](https://github.com/bitpay/sample-cordova-skd.git).
+
+## Using the Command Line Tool
+
+To explore more of the API, we've include a command line tool to do all of the API calls for help with developing your application, all of the API calls that you can make from the CLI you can make in your Cordova application.
+
+```
+$ cd plugins/com.bitpay.sdk.cordova/bin
+$ ./bitpay.js pair -S test -F merchant
+```
+
+The `-S` option is the name of the server, it can be `test` or `live`, depending on the account you're working with. The `-F` option is the name of the capability that you want to use. If you have not already configured a `Client ID` it will prompt you to save one. Once complete you should receive a response with a pairing code that you can then approve.
+
+Go to [*My Account* > *API Tokens*](https://test.bitpay.com/api-tokens) and enter the pairing code, and approve the request. Once completed you should be able to issue API calls.
+
+Create an invoice:
+
+```
+$ ./bitpay call -S test -F merchant -M createInvoice -P '{"price": 100.00, "currency": "USD"}'
+```
+
+Create tokens for application distribution:
+
+```
+$ ./bitpay call -S test -F merchant -M createPublicPOSToken
+```
