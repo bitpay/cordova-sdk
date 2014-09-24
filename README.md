@@ -127,7 +127,7 @@ $ cd plugins/com.bitpay.sdk.cordova/bin
 $ ./bitpay.js pair -S test -F merchant
 ```
 
-The `-S` option is the name of the server, it can be `test` or `live`, depending on your account. The `-F` option is the name of the capability that you want to use. If you have not already configured a `Client ID` it will prompt you to save one. Once complete you should receive a response with a `pairingCode` that you can then approve at [*My Account* > *API Tokens*](https://test.bitpay.com/api-tokens) and enter the `pairingCode`. Once completed you should be able to issue API calls.
+The `-S` option is the name of the server, it can be `test` or `live`, depending on your account. The `-F` option is the name of the capability that you want to use. If you have not already configured a `Client ID` it will prompt you to save one. Once complete you should receive a response with a `pairingCode` that you can then approve at *My Account > API Tokens* and enter the `pairingCode`. Once completed you should be able to issue API calls.
 
 Create an invoice:
 
