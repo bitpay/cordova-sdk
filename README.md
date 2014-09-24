@@ -812,9 +812,9 @@ Example Response:
 - createBill
 - getBills
 - getBillById
-- getInvoiceBusToken
-- getInvoiceSettings
-- createInvoice
+- getInvoiceBusToken *(see public)*
+- getInvoiceSettings *(see point-of-sale)*
+- createInvoice *(see point-of-sale)*
 
 ## Merchant/Invoice
 
@@ -932,17 +932,66 @@ Example Response:
 
 ```javascript
 
+{
+  url: 'https://sample.com/invoice?id=8KNSxj3m1rcbAWnghSpMKD',
+  status: 'complete',
+  btcPrice: '0.0023',
+  btcDue: '0.0000',
+  price: 1,
+  currency: 'USD',
+  exRates: { USD: 428.33 },
+  invoiceTime: 1411588107332,
+  expirationTime: 1411589007332,
+  currentTime: 1411591834055,
+  id: '8KNSxj3m1rcbAWnghSpMKD',
+  btcPaid: '0.0023',
+  rate: 428.33,
+  exceptionStatus: false,
+  transactions: [
+    {
+      amount: 500000,
+      confirmations: 6,
+      time: '1970-01-01T00:00:00.000Z',
+      receivedTime: '2014-09-24T19:49:18.662Z' },
+    {
+      amount: -270000,
+      confirmations: 6,
+      time: '2014-09-24T20:50:34.046Z',
+      receivedTime: '2014-09-24T20:50:34.046Z'
+    }
+  ]
+}
+
 ```
+
+**Note**: The status has changed to `confirmed`, the `btcPaid` has been adjusted, and the additional payment is credited to your ledger.
 
 ### getRefunds
 
 Will list the refunds on the invoice.
 
+Example Response:
 
+```javascript
+[
+  {
+    id: '3Ls5s9RfzkN9VtPiTkx8mQ',
+    requestDate: '2014-09-24T21:05:17.251Z',
+    status: 'pending',
+    token: '6akAeXT66eLfJpCgmAsaT3AQ3TpX72kJrMPvHqSDG8BCaGNGGiRuechfsAdtGhgMnk'
+  }
+]
+```
 
 ### sendNotification
 
 Will send an IPN notification for the invoice.
+
+Example Response:
+
+```javascript
+"Success"
+```
 
 ### Undocumented
 
