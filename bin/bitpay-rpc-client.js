@@ -243,6 +243,8 @@ program
   .description('will execute a remote api method')
   .option('-k, --insecure', 'disables strict ssl')
   .option('-S, --server <server_name|host:port>', 'the server name `live`, `test` or <host>:<port>')
+  .option('-T, --token <encoded_token>', 'specify a specific token to use instead a facade')
+  .option('-I, --clientid <client_id>', 'specify a specific client id to use with manual token')
   .option('-F, --facade <facade_name>', 'the facade name')
   .option('-R, --resource <resource_id>', 'the resource id')
   .option('-M, --method <method_name>', 'the method name')
@@ -252,7 +254,7 @@ program
     // check for required arguments
     var errors = [];
     if (!cmd.server) errors.push('Please specify a server: `-S <name>` (test or live)');
-    if (!cmd.facade) errors.push('Please specify a facade: `-F <facade>` (public, user, pos, merchant...)');
+    if (!cmd.token && !cmd.facade) errors.push('Please specify a facade: `-F <facade>` or manually use a token `-T <token>`');
     if (!cmd.method) errors.push('Please specify a method: `-M <method>`');
 
     // send back all of the errors
@@ -325,21 +327,33 @@ program
 
     }
 
-    // retrieve the needed token
-    var query = {
-      host: server.host,
-      facade: cmd.facade
-    }
-    if ( cmd.resource ) {
-      facade.resource = cmd.resource
-    }
-
-    if ( query.facade == 'public') {
-      // do not sign or pass token
-      handleToken(null, false);
+    // manually use a token and identity directly
+    if ( cmd.token ) {
+      var tokenObj = {
+        token: cmd.token
+      }
+      if ( cmd.clientid ) {
+        tokenObj.identity = cmd.clientid;
+      }
+      handleToken(null, tokenObj);
     } else {
-      // sign and pass a token
-      config.getToken(query, handleToken);
+
+      // retrieve the needed token
+      var query = {
+        host: server.host,
+        facade: cmd.facade
+      }
+      if ( cmd.resource ) {
+        facade.resource = cmd.resource
+      }
+      
+      if ( query.facade == 'public') {
+        // do not sign or pass token
+        handleToken(null, false);
+      } else {
+        // sign and pass a token
+        config.getToken(query, handleToken);
+      }
     }
 
   })
