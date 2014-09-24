@@ -2,7 +2,7 @@
 
 # Getting Started
 
-If you do not already have an account at BitPay, please go to https://test.bitpay.com to signup. After registration, depending on the kind of application you are building you may need to go through a pairing process for some of the API capabilities. This is a cordova/phonegap plugin, and will make available several JavaScript files that you can use to easily intergrate the BitPay API into your application.
+If you do not already have an account at BitPay, please go to https://test.bitpay.com to signup. After registration, depending on the kind of application you are building you may need to go through a pairing process for some of the API capabilities. This is a cordova/phonegap plugin, and will make available several JavaScript files that you can use to easily integrate the BitPay API into your application.
 
 Install the SDK plugin:
 
