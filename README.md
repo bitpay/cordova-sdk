@@ -36,7 +36,7 @@ document.addEventListener("deviceready", function(){
     // Create Invoice
     bitpay.createInvoice({
         price: 314.15,
-        currency: "USD"
+        currency: 'USD'
     }, function(error, invoice){
       if (error) throw error;
 
@@ -51,7 +51,7 @@ document.addEventListener("deviceready", function(){
 
     // Get Invoice
     bitpay.getInvoice({
-        invoiceId: "838eonmeore0304"
+        invoiceId: 'RyNzmZEbGwACpmNg8X6jGN'
     }, function(error, invoice){
       if (error) throw error;
 
@@ -67,15 +67,15 @@ For additional capabilities with invoices please refer to the `Merchant.findInvo
 
 ## Using the API Client
 
-You can instantiate a BitPay client as follows:
+To make direct API calls, you can instantiate a BitPay client as follows:
 
 ```javascript
     var Client = cordova.require('com.bitpay.sdk.cordova.RPCClient');
 
     var pos = new Client({
-        host: 'test.bitpay.com,
+        host: 'test.bitpay.com',
         port: 443,
-        token: '70163c90f...' // as retrieved from above, point-of-sale capability
+        token: '70163c90f...' // any type of token, point-of-sale in the example below
     });
 
 ```
@@ -86,7 +86,7 @@ Now your app is ready to make API calls:
     // Create Invoice
     pos.call('createInvoice', {
         price: 314.15,
-        currency: "USD"
+        currency: 'USD'
     }, function(error, data){
       if (error) throw error;
 
@@ -138,7 +138,7 @@ Using other Capabilities:
 
     // Track invoice state
     public.call('getInvoice', {
-      invoiceId: <invoice_id>,
+      invoiceId: 'RyNzmZEbGwACpmNg8X6jGN',
     }, function(error, data){
        if ( error ) throw error;
        // do something with the invoice response
