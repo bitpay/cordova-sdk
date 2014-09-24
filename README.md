@@ -15,13 +15,13 @@ $ cordova plugin add https://github.com/bitpay/cordova-sdk.git
 
 **Use case:** Generating and tracking invoices in a distributed application.
 
-Login to https://test.bitpay.com and navigate to [*My Account* > *API Tokens*](https://test.bitpay.com/api-tokens). Click on the *Add New Token* and make a token with the *Point-of-Sale* capability for multiple clients. You can then include this token with your application.
+Login to https://test.bitpay.com and navigate to *[My Account > API Tokens](https://test.bitpay.com/api-tokens)*. Click on the *Add New Token* and make a token with the *Point-of-Sale* capability for multiple clients. You can then include this token with your application.
 
 ## Invoices
 
 We can easily create invoices and attach custom events on successful payment, or simply direct to the BitPay invoice url.
 
-```
+```javascript
 
 document.addEventListener("deviceready", function(){
 
@@ -49,13 +49,13 @@ document.addEventListener("deviceready", function(){
 
 ```
 
-To read more about invoices refer to the BitPay's [API documentation](https://test.bitpay.com/api)
+For additional capabilities with invoices please refer to the `Merchant.findInvoices` section below.
 
 ## Using the API Client
 
 You can instantiate a BitPay client as follows:
 
-```
+```javascript
     var Client = cordova.require('com.bitpay.sdk.cordova.RPCClient');
 
     var pos = new Client({
@@ -66,11 +66,9 @@ You can instantiate a BitPay client as follows:
 
 ```
 
-## Issuing an API Call
-
 Now your app is ready to make API calls:
 
-```
+```javascript
     // Create Invoice
     pos.call('createInvoice', {
         price: 123.5,
@@ -91,9 +89,9 @@ Now your app is ready to make API calls:
     });
 ```
 
-## Using other Capabilities
+Using other Capabilities:
 
-```
+```javascript
     // To use public capabilities, do not pass a token
     var public = new BitpayRPCClient({
         host: 'test.bitpay.com',
@@ -129,27 +127,25 @@ $ cd plugins/com.bitpay.sdk.cordova/bin
 $ ./bitpay.js pair -S test -F merchant
 ```
 
-The `-S` option is the name of the server, it can be `test` or `live`, depending on the account you're working with. The `-F` option is the name of the capability that you want to use. If you have not already configured a `Client ID` it will prompt you to save one. Once complete you should receive a response with a pairing code that you can then approve.
-
-Go to [*My Account* > *API Tokens*](https://test.bitpay.com/api-tokens) and enter the pairing code, and approve the request. Once completed you should be able to issue API calls.
+The `-S` option is the name of the server, it can be `test` or `live`, depending on your account. The `-F` option is the name of the capability that you want to use. If you have not already configured a `Client ID` it will prompt you to save one. Once complete you should receive a response with a `pairingCode` that you can then approve at [*My Account* > *API Tokens*](https://test.bitpay.com/api-tokens) and enter the `pairingCode`. Once completed you should be able to issue API calls.
 
 Create an invoice:
 
 ```
-$ ./bitpay call -S test -F merchant -M createInvoice -P '{"price": 100.00, "currency": "USD"}'
+$ ./bitpay.js call -S test -F merchant -M createInvoice -P '{"price": 100.00, "currency": "USD"}'
 ```
 
 Create tokens for application distribution:
 
 ```
-$ ./bitpay call -S test -F merchant -M createPublicPOSToken
+$ ./bitpay.js call -S test -F merchant -M createPublicPOSToken
 ```
 
 # BitPay API Calls
 
 ## Public
 
-To use the public capabilities, do not include a token or sign the API call. 
+To use the public capabilities do not include a token or identity *(sign the API call)*.
 
 ### createToken
 
@@ -157,10 +153,10 @@ Creates or claims an access token. If you supply an `id` and `facade` you will r
 
 Parameters:
 
-Name          | Type                       | Required 
+Name          | Type                       | Required
 ------------- | -------------------------- | -------------
 id            | Client ID                  | true
-pairingCode   | string                     | 
+pairingCode   | string                     |
 facade        | string *(merchant, pos)*   |
 label         | string                     |
 
@@ -170,7 +166,7 @@ Example Params:
 
 ```javascript
 {
-  "id": "Tf4iyFq4hgEf3iVHkeihR9DKPVpqEWF5crd", 
+  "id": "Tf4iyFq4hgEf3iVHkeihR9DKPVpqEWF5crd",
   "facade": "merchant"
 }
 ```
@@ -178,18 +174,18 @@ Example Params:
 Example Response:
 
 ```javascript
-[ 
-  { 
+[
+  {
     token: '4bdD1muDaxBydeYHSdNagEy1w44FJftrfftmJ5pLfcXU',
     facade: 'merchant',
     dateCreated: 1411506027126,
     pairingExpiration: 1411592427126,
     pairingCode: 'ww0MuhY',
     policies: [
-      { 
+      {
         policy: 'id',
         method: 'inactive',
-        params: [ 'Tf4iyFq4hgEf3iVHkeihR9DKPVpqEWF5crd' ] 
+        params: [ 'Tf4iyFq4hgEf3iVHkeihR9DKPVpqEWF5crd' ]
       }
     ]
  }
@@ -200,7 +196,9 @@ Example Response:
 
 Retrieves the specified invoice.
 
-Name          | Type                       | Required 
+Parameters:
+
+Name          | Type                       | Required
 ------------- | -------------------------- | -------------
 invoiceId     | BitPay Invoice ID (string) | true
 
@@ -220,15 +218,15 @@ Example Response:
 
 ```javascript
 
-{ 
+{
   url: 'https://sample.com/invoice?id=MKBena5VPtX1SVwtirJYRa',
   status: 'new',
   btcPrice: '0.2260',
   btcDue: '0.2260',
   price: 100,
   currency: 'USD',
-  exRates: { 
-    USD: 442.55566469557 
+  exRates: {
+    USD: 442.55566469557
   },
   invoiceTime: 1411506491781,
   expirationTime: 1411507391781,
@@ -237,13 +235,13 @@ Example Response:
   btcPaid: '0.0000',
   rate: 442.56,
   exceptionStatus: false,
-  paymentUrls: { 
+  paymentUrls: {
     BIP21: 'bitcoin:n4qa4vHkFG9EK7kB1izSVk1kqK89oVC97o?amount=0.2260',
     BIP72: 'bitcoin:n4qa4vHkFG9EK7kB1izSVk1kqK89oVC97o?amount=0.2260&r=https://sample.com/i/MKBena5VPtX1SVwtirJYRa',
     BIP72b: 'bitcoin:?r=https://sample.com/i/MKBena5VPtX1SVwtirJYRa',
-    BIP73: 'https://sample.com/i/MKBena5VPtX1SVwtirJYRa' 
+    BIP73: 'https://sample.com/i/MKBena5VPtX1SVwtirJYRa'
   },
-  token: 'A8gT6iTyQFWa6tYTAccJfAEJMaJaNEscrrxNzx16yJaHTwNq2kVqSTYvWyngmUp61X' 
+  token: 'A8gT6iTyQFWa6tYTAccJfAEJMaJaNEscrrxNzx16yJaHTwNq2kVqSTYvWyngmUp61X'
 }
 
 ```
@@ -254,7 +252,9 @@ Example Response:
 
 Will retrieve a token to listen using [EventSource](https://developer.mozilla.org/en-US/docs/Web/API/EventSource) to payment events for invoices. The token returned will represent a combination of *capabilities* (listening to an event) and *resource* (the invoice).
 
-Name          | Type                       | Required 
+Parameters:
+
+Name          | Type                       | Required
 ------------- | -------------------------- | -------------
 invoiceId     | BitPay Invoice ID (string) | true
 
@@ -272,11 +272,11 @@ Example Params:
 Example Response:
 
 ```javascript
-{ 
+{
   url: 'https://sample.com/events',
   token: '5qkeDrNot4VAUABq6BgdBe6nnq3PPmYiwVhC97eeEupUFao5Vze6NnNxqDXbktB8qy',
   events: [ 'payment' ],
-  actions: [ 'subscribe', 'unsubscribe' ] 
+  actions: [ 'subscribe', 'unsubscribe' ]
 }
 ```
 
@@ -321,10 +321,10 @@ Example Params:
 Example Response:
 
 ```javascript
-{ 
+{
   code: 'USD',
   name: 'US Dollar',
-  rate: 437.02 
+  rate: 437.02
 }
 ```
 
@@ -336,22 +336,22 @@ Example Response:
 
 ```javascript
 
-[ 
-  { 
+[
+  {
     code: 'USD',
     name: 'US Dollar',
     rate: 437.29 },
-  { 
+  {
     code: 'EUR',
     name: 'Eurozone Euro',
     rate: 340.0488 },
     name: 'Zambian Kwacha',
     rate: 2705.8471 },
-  { 
+  {
     code: 'ZWL',
     name: 'Zimbabwean Dollar',
-    rate: 140952.9499 
-  } 
+    rate: 140952.9499
+  }
 ]
 
 ```
@@ -364,8 +364,8 @@ Example Response:
 
 ```javascript
 
-[ 
-  { 
+[
+  {
     code: 'BTC',
     symbol: 'à¸¿',
     precision: 4,
@@ -374,7 +374,7 @@ Example Response:
     name: 'Bitcoin',
     plural: 'Bitcoin',
     alts: 'btc',
-    payoutFields: [ 'bitcoinAddress' ] 
+    payoutFields: [ 'bitcoinAddress' ]
   },
   { code: 'ZWL',
     symbol: 'Z$',
@@ -384,8 +384,8 @@ Example Response:
     name: 'Zimbabwean Dollar',
     plural: 'Zimbabwean Dollar',
     alts: '',
-    payoutFields: [] 
-  } 
+    payoutFields: []
+  }
 ]
 
 ```
@@ -396,7 +396,7 @@ Creates an application for a new merchant account.
 
 Parameters:
 
-Name          | Type          | Required 
+Name          | Type          | Required
 ------------- | ------------- | -------------
 users         | array         | true
 orgs          | array         | true
@@ -411,7 +411,7 @@ Example Params:
     "lastName": "Nakamoto",
     "phone": "4041235678",
     "agreedToTOSandPP": "true" // Do you agree to the Terms of Service
-  }], 
+  }],
   "orgs": [{
     "name": "Satoshi Widgets",
     "address1": "123 Peachtree St",
@@ -432,7 +432,7 @@ Example Params:
 Example Response:
 
 ```javascript
-{ 
+{
   verificationCode: '0.1406255280598998',
   requiredTier: 0,
   accountName: 'Satoshi Widgets',
@@ -451,7 +451,7 @@ Example Response:
   updated: '2014-09-23T20:31:09.759Z',
   requiresReview: false,
   activated: false,
-  verified: false 
+  verified: false
 }
 ```
 
@@ -463,17 +463,18 @@ To use the point-of-sale capabilities, you'll need to generate a token. These to
 
 Will create an invoice
 
+Parameters:
 
-Name          | Type           | Required 
+Name          | Type           | Required
 ------------- | -------------  | -------------
 price         | number         | true
 currency      | currency code  | true
 
-Example Params: 
+Example Params:
 
 ```javascript
 {
-  "price": 100.00, 
+  "price": 100.00,
   "currency": "USD"
 }
 ```
@@ -481,7 +482,7 @@ Example Params:
 Example Response:
 
 ```javascript
-{ 
+{
   url: 'https://sample.com/invoice?id=MKBena5VPtX1SVwtirJYRa',
   status: 'new',
   btcPrice: '0.2260',
@@ -497,13 +498,13 @@ Example Response:
   rate: 442.56,
   exceptionStatus: false,
   transactions: [],
-  paymentUrls: { 
+  paymentUrls: {
     BIP21: 'bitcoin:n4qa4vHkFG9EK7kB1izSVk1kqK89oVC97o?amount=0.2260',
     BIP72: 'bitcoin:n4qa4vHkFG9EK7kB1izSVk1kqK89oVC97o?amount=0.2260&r=https://sample.com/i/MKBena5VPtX1SVwtirJYRa',
     BIP72b: 'bitcoin:?r=https://sample.com/i/MKBena5VPtX1SVwtirJYRa',
-    BIP73: 'https://sample.com/i/MKBena5VPtX1SVwtirJYRa' 
+    BIP73: 'https://sample.com/i/MKBena5VPtX1SVwtirJYRa'
   },
-  token: '8Esi7g1utRuS8USZqrATQechZX9jkmHinQM4rpD76izieEJ8n3AsBczz5EJ24jiiRp' 
+  token: '8Esi7g1utRuS8USZqrATQechZX9jkmHinQM4rpD76izieEJ8n3AsBczz5EJ24jiiRp'
 }
 ```
 
@@ -521,26 +522,28 @@ Example Response:
   account: '5421f0b9edfb002433004520',
   additionalCurrencies: [ 'USD','EUR','GBP','JPY' ],
   defaultCurrency: 'USD',
-  notificationEmail: '',
-  notificationURL: '',
-  merchantName: 'BitPay - UX' 
+  notificationEmail: 'satoshi@sample.com',
+  notificationURL: 'https://sample.com/ipn',
+  merchantName: 'Satoshis Widgets'
 }
 ```
 
 ## Merchant
 
-To use the merchant capabilities, you'll need to generate a token. With public capabilities you can create a token and specify `merchant` as the `facade`, and then use the return `pairingCode` to add the token to your account at *My Account -> API Tokens*.
+To use the merchant capabilities on a merchant resource, you'll need to generate a token. With public capabilities you can create a token and specify `merchant` as the `facade`, and then use the return `pairingCode` to add the token to your account at *My Account -> API Tokens*, or give this `pairingCode` to an merchant organization administrator to add and approve.
 
 ### findInvoices
 
 Retrieves invoices for the calling merchant based on the query.
 
-Name          | Type           | Required 
+Parameters:
+
+Name          | Type           | Required
 ------------- | -------------  | -------------
 dateStart     | date           | true
 dateEnd       | date           |
-limit         | number         | 
-skip          | number         | 
+limit         | number         |
+skip          | number         |
 itemCode      | string         |
 orderId       | string         |
 
@@ -559,8 +562,8 @@ Example Params:
 Example Response:
 
 ```javascript
-[ 
-  { 
+[
+  {
     url: 'https://sample.com/invoice?id=54cbXB29FoNY48hbctAvKy',
     status: 'new',
     btcPrice: '0.2272',
@@ -576,14 +579,14 @@ Example Response:
     rate: 440.12,
     exceptionStatus: false,
     transactions: [],
-    paymentUrls: { 
+    paymentUrls: {
       BIP21: 'bitcoin:mndc6N5QPCMUgW378D9Nj5wZEwVQ82HGcd?amount=0.2272',
       BIP72: 'bitcoin:mndc6N5QPCMUgW378D9Nj5wZEwVQ82HGcd?amount=0.2272&r=https://sample.com/i/54cbXB29FoNY48hbctAvKy',
       BIP72b: 'bitcoin:?r=https://sample.com/i/54cbXB29FoNY48hbctAvKy',
-      BIP73: 'https://sample.com/i/54cbXB29FoNY48hbctAvKy' 
+      BIP73: 'https://sample.com/i/54cbXB29FoNY48hbctAvKy'
     },
-    token: '8Esi7g1utRuS8USZqrATQedEA3nhPhuniWJXBUwMbq546fWrUAkCtTEah2pPB6jeW2' 
-  } 
+    token: '8Esi7g1utRuS8USZqrATQedEA3nhPhuniWJXBUwMbq546fWrUAkCtTEah2pPB6jeW2'
+  }
 ]
 ```
 
@@ -592,26 +595,26 @@ Example Response:
 When there is activity on the invoice the status will change, here is the meaning of each status.
 
 Status          | Description
--------------   | -------------  
+-------------   | -------------
 new             | The invoice has not yet been fully paid
-paid            | Received payment however has not yet been fully confirmed 
+paid            | Received payment however has not yet been fully confirmed
 complete        | Payment confirmed based on the `transaction` speed settings
 expired         | Can no longer receive payments
 invalid         | The invoice has received payment, however was invalid
 
-When a payment is received, transactions will become available. An invoice can receive a partial payment and an overpayment, and in these situations an `exceptionStatus` will be available with `paidPartial` and `paidOver`. It's also possible to accept an over or under payment via the API, and we will go into that below.
+When a payment is received, transactions will become available. An invoice can receive a partial payment and an over payment, and in these situations an `exceptionStatus` will be available with `paidPartial` and `paidOver`. It's also possible to accept an over or under payment via the API, and we will go into that below.
 
 ```javascript
 
     exceptionStatus: 'paidPartial',
-    transactions: 
+    transactions:
      [
-       { 
+       {
          amount: 110000,
          confirmations: 0,
          time: '1970-01-01T00:00:00.000Z',
-         receivedTime: '2014-09-23T22:51:20.106Z' 
-       } 
+         receivedTime: '2014-09-23T22:51:20.106Z'
+       }
      ],
 
 ```
@@ -620,7 +623,9 @@ When a payment is received, transactions will become available. An invoice can r
 
 Retrieves a single invoice with additional transaction information.
 
-Name          | Type                       | Required 
+Parameters:
+
+Name          | Type                       | Required
 ------------- | -------------------------- | -------------
 invoiceId     | BitPay Invoice ID (string) | true
 
@@ -638,7 +643,7 @@ Example Params:
 Example Response:
 
 ```javascript
-{ 
+{
   url: 'https://sample.com/invoice?id=YEh2jnoZUAbYMW2XtE44VD',
   status: 'confirmed',
   btcPrice: '0.0023',
@@ -653,19 +658,19 @@ Example Response:
   btcPaid: '0.0030',
   rate: 435.72,
   exceptionStatus: 'paidOver',
-  transactions: [ 
-    { 
+  transactions: [
+    {
       amount: 300000,
       confirmations: 1,
       time: '1970-01-01T00:00:00.000Z',
-      receivedTime: '2014-09-23T22:59:22.443Z' 
-    } 
+      receivedTime: '2014-09-23T22:59:22.443Z'
+    }
   ],
-  token: '8Esi7g1utRuS8USZqrATQeWGCLPqyLpcexbehA7DwDckiiZjj36LdJtSdmXvPZJTUW' 
+  token: '8Esi7g1utRuS8USZqrATQeWGCLPqyLpcexbehA7DwDckiiZjj36LdJtSdmXvPZJTUW'
 }
 ```
 
-**Note**: The token returned from this response includes `merchant/invoice` capabilities, including being able to make a refund. We will go into that later below.
+**Note**: The token returned from this response includes `merchant` capabilities on the `invoice` resource, including being able to make a refund, this is described in further detail below.
 
 ### getLedgers
 
@@ -675,15 +680,15 @@ Example Response:
 
 ```javascript
 
-[ 
-  { 
-    currency: 'BTC', 
-    balance: 0.0076 
+[
+  {
+    currency: 'BTC',
+    balance: 0.0076
   },
-  { 
-    currency: 'USD', 
-    balance: 0 
-  } 
+  {
+    currency: 'USD',
+    balance: 0
+  }
 ]
 
 ```
@@ -692,7 +697,9 @@ Example Response:
 
 Will return entries for a given ledger.
 
-Name          | Type                       | Required 
+Parameters:
+
+Name          | Type                       | Required
 ------------- | -------------------------- | -------------
 currency      | currency code (string)     | true
 startDate     | date                       | true
@@ -702,8 +709,8 @@ Example Params:
 
 ```javascript
 {
-  "currency": "BTC", 
-  "startDate": "2014-9-1", 
+  "currency": "BTC",
+  "startDate": "2014-9-1",
   "endDate": "2014-9-30"
 }
 ```
@@ -711,8 +718,8 @@ Example Params:
 Example Response:
 
 ```javascript
-[ 
-  { 
+[
+  {
     code: 1000,
     amount: 230000,
     timestamp: '2014-09-24T00:30:18.737Z',
@@ -724,9 +731,9 @@ Example Response:
     sourceType: 'invoice',
     customerData: { customData: [] },
     invoiceAmount: 1,
-    invoiceCurrency: 'USD' 
+    invoiceCurrency: 'USD'
   },
-  { 
+  {
     description: 'overpayment credit',
     code: 1003,
     timestamp: '2014-09-24T00:53:25.594Z',
@@ -740,23 +747,22 @@ Example Response:
     sourceType: 'invoice',
     customerData: { customData: [] },
     invoiceAmount: 1,
-    invoiceCurrency: 'USD' 
-  } 
+    invoiceCurrency: 'USD'
+  }
 ]
 
 ```
 
 ### createToken
 
-Will add a new token for the callers merchant resource. A token can be partially created with `public` capabilities, and the `pairingCode` generated can be given to the account owner with `merchant` capabilities to complete and thus activating the token.
+Will approve a token for the callers merchant resource. A `pairingCode` can be retrieved using `public` capabilities, as described above, and can then be added and approved to the callers merchant resource with this call. A `facade` and `pairingCode` are both required, the `facade` method should match the requesters facade as verification of capabilities.
 
+Parameters:
 
-Name          | Type                       | Required 
+Name          | Type                       | Required
 ------------- | -------------------------- | -------------
 pairingCode   | string                     | true
 facade        | facade *(pos, merchant)*   | true
-
-**Note**: The label is alphanumeric with spaces, underscores and dashes. A Client ID is based on the [bitcoin identity protocol](https://en.bitcoin.it/wiki/Identity_protocol_v1).
 
 
 ```javascript
@@ -769,41 +775,40 @@ facade        | facade *(pos, merchant)*   | true
 Example Response:
 
 ```javascript
-[ 
-  { 
+[
+  {
     resource: '51rjLjdhZotGsH76hZpdg5j8KAvsWLWXEaww8ynUa7zh',
     token: 'U4Zeh3tKhUwLguxK8r6TAg',
     facade: 'merchant',
     dateCreated: 1411520974852,
-    policies: [{ 
+    policies: [{
          policy: 'id',
          method: 'require',
          params: ['TfDzkkFs7vTe8yHyb28NDZ56Jt2VBAF3ysd']
-    ]} 
-   } 
+    ]}
+   }
 ]
 ```
 
 ### createPublicPOSToken
 
-This will create a token with point-of-sale capabilities, the ability to create invoices. It will not be restricted to a specific Client ID, and can be distributed with mobile applications. The token will appear at *My Account -> API Tokens* and can be further managed.
+This will create a token with point-of-sale capabilities *(the ability to create invoices)*. It will *not* be restricted to a specific Client ID, and can be distributed with mobile applications. The token will appear at *My Account -> API Tokens* and can be further managed.
 
 Example Response:
 
 ```javascript
-[ 
-  { 
+[
+  {
     policies: [],
     resource: '51rjLjdhZotGsH76hZpdg5j8KAvsWLWXEaww8ynUa7zh',
     token: '5VZPyPQRczUc8HP3EF9Q5jSwNJtVu4nDvEg5u8iqj8eN',
     facade: 'pos',
-    dateCreated: 1411519737345 
-  } 
+    dateCreated: 1411519737345
+  }
 ]
 ```
 
 ### Undocumented
-
 - createBill
 - getBills
 - getBillById
@@ -813,13 +818,15 @@ Example Response:
 
 ## Merchant/Invoice
 
-To use the `merchant/invoice` capabilities, you'll need to get a token for the `getInvoice` call, as document above in the Merchant section. This provides capabilities for making calls upon a single invoice.
+To use the `merchant` capabilities on an `invoice` resource, you'll need to get a token for the `getInvoice` call, as documented above in the Merchant section. When using this token, the following capabilities will be available for acting upon an invoice.
 
 ### refund
 
-Will refund the invoice to any bitcoin address. The invoice will need to have *six confirmations* in the blockchain before a refund can be requested. It's also not possible to do a refund while an invoice is partially or overpaid state, see below for more information. 
+Will refund the invoice to any bitcoin address. The invoice will need to have *six confirmations* in the blockchain before a refund can be requested. It's not possible to do a refund while an invoice is partially or overpaid state, see below for more information.
 
-Name               | Type                       | Required 
+Parameters:
+
+Name               | Type                       | Required
 ------------------ | -------------------------- | -------------
 bitcoinAddress     | bitcoin address (string)   | true
 amount             | number                     | true
@@ -830,8 +837,8 @@ Example Params:
 ```javascript
 
 {
-  "bitcoinAddress": "mtX8nPZZdJ8d3QNLRJ1oJTiEi26Sj6LQXS", 
-  "amount": 100.00, 
+  "bitcoinAddress": "mtX8nPZZdJ8d3QNLRJ1oJTiEi26Sj6LQXS",
+  "amount": 100.00,
   "currency": "USD"
 }
 
@@ -841,21 +848,22 @@ Example Response:
 
 ```javascript
 
-{ 
+{
   id: 'H9EE8zkSTL5XRCY8pFSf76',
   requestDate: '2014-09-24T00:55:08.347Z',
   status: 'pending',
-  token: '6akAeXT66eLfJpCgmAsaT3QLqcXZd1cRseBUSych5KZs7iXAxjLyRvCU8TjMB3DBfw' 
+  token: '6akAeXT66eLfJpCgmAsaT3QLqcXZd1cRseBUSych5KZs7iXAxjLyRvCU8TjMB3DBfw'
 }
 
 ```
 
-
 ### creditPartialPayment
 
-Will accept a partial payment to complete the payment. Must be done after *six confirmations*, and the invoice has been written to the ledger.
+Will accept a partial payment to complete the payment. Must be done after *six confirmations* and the invoice has been written to the ledger.
 
-Name               | Type                       | Required 
+Parameters:
+
+Name               | Type                       | Required
 ------------------ | -------------------------- | -------------
 commit             | boolean                    | true
 
@@ -871,15 +879,42 @@ Example Response:
 
 ```javascript
 
-
+{
+  url: 'https://sample.com/invoice?id=8qKF5wGktvwnkGVLmxPgbs',
+  status: 'confirmed',
+  btcPrice: '0.0010',
+  btcDue: '0.0000',
+  price: 0.44,
+  currency: 'USD',
+  exRates: { USD: 426.09000000000003 },
+  invoiceTime: 1411586102477,
+  expirationTime: 1411587002477,
+  currentTime: 1411587051574,
+  id: '8qKF5wGktvwnkGVLmxPgbs',
+  btcPaid: '0.0010',
+  rate: 426.09,
+  exceptionStatus: false,
+  transactions: [
+    {
+      amount: 100000,
+      confirmations: 2,
+      time: '1970-01-01T00:00:00.000Z',
+      receivedTime: '2014-09-24T19:17:33.644Z'
+    }
+  ]
+}
 
 ```
+
+**Note**: The status has changed to `confirmed`, the `btcPrice` has been adjusted and the `exceptionStatus` has been cleared.
 
 ### creditOverpayment
 
 Will accept an over payment to complete the payment. Must be done after *six confirmations*, and the invoice has been written to the ledger.
 
-Name               | Type                       | Required 
+Parameters:
+
+Name               | Type                       | Required
 ------------------ | -------------------------- | -------------
 commit             | boolean                    | true
 
@@ -916,4 +951,3 @@ Will send an IPN notification for the invoice.
 - getTxRequest
 - getTxRequests
 - get
-

@@ -299,10 +299,15 @@ program
         var client = new RPCClient(clientConfig);
 
         client.call( cmd.method, params, function(err, data){
-          if ( err ) throw err;
-          console.log(util.inspect(data, {
-            depth: null, colors: true
-          }));
+          if ( err ) {
+            console.log(util.inspect(err, {
+              depth: null, colors: true
+            }));
+          } else {
+            console.log(util.inspect(data, {
+              depth: null, colors: true
+            }));
+          }
           process.exit();
         })
 
