@@ -1,8 +1,10 @@
-# BitPay SDK Cordova/Phonegap Plugin
+# BitPay SDK Cordova Plugin
 
-Please go to https://test.bitpay.com to create an account. After registration, depending on the kind of application you are building you may need to go through a pairing process.
+# Getting Started
 
-# Install the SDK plugin
+If you do not already have an account at BitPay, please go to https://test.bitpay.com to signup. After registration, depending on the kind of application you are building you may need to go through a pairing process for some of the API capabilities. This is a cordova/phonegap plugin, and will make available several JavaScript files that you can use to easily intergrate the BitPay API into your application.
+
+Install the SDK plugin:
 
 ```
 $ cordova plugin add https://github.com/bitpay/cordova-sdk.git
@@ -46,6 +48,8 @@ document.addEventListener("deviceready", function(){
 }
 
 ```
+
+To read more about invoices refer to the BitPay's [API documentation](https://test.bitpay.com/api)
 
 ## Using the API Client
 
@@ -112,8 +116,6 @@ Now your app is ready to make API calls:
 
 ```
 
-To read more about invoices refer to the BitPay's [API documentation](https://test.bitpay.com/api)
-
 ## Sample Applications
 
 - Music store app using the SDK [here](https://github.com/bitpay/sample-cordova-skd.git).
@@ -143,13 +145,13 @@ Create tokens for application distribution:
 $ ./bitpay call -S test -F merchant -M createPublicPOSToken
 ```
 
-## BitPay API Calls
+# BitPay API Calls
 
-### Public
+## Public
 
 To use the public capabilities, do not include a token or sign the API call. 
 
-#### createToken
+### createToken
 
 Creates or claims an access token. If you supply an `id` and `facade` you will receive a `pairingCode` that you can either give to an account owner to approve yourself by authenticating at the *My Account -> API Tokens*. If you already have a `pairingCode`, you can pass both an `id` and `pairingCode` to link your Client ID to the token.
 
@@ -194,7 +196,7 @@ Example Response:
 ]
 ```
 
-#### getInvoice
+### getInvoice
 
 Retrieves the specified invoice.
 
@@ -248,7 +250,7 @@ Example Response:
 
 **Note**: The `paymentUrls` are *temporary* and will change and not be available after 15 minutes when the invoice expires, or the invoice has been paid.
 
-#### getInvoiceBusToken
+### getInvoiceBusToken
 
 Will retrieve a token to listen using [EventSource](https://developer.mozilla.org/en-US/docs/Web/API/EventSource) to payment events for invoices. The token returned will represent a combination of *capabilities* (listening to an event) and *resource* (the invoice).
 
@@ -303,7 +305,7 @@ bus.addEventListener('statechange', function(e){
 
 ```
 
-#### getRateForCurrency
+### getRateForCurrency
 
 Retrieves the exchange rate for the given currency.
 
@@ -326,7 +328,7 @@ Example Response:
 }
 ```
 
-#### getRates
+### getRates
 
 Retrieves the list of exchange rates.
 
@@ -354,7 +356,7 @@ Example Response:
 
 ```
 
-#### getCurrencies
+### getCurrencies
 
 Retrieves the list of supported currencies.
 
@@ -388,7 +390,7 @@ Example Response:
 
 ```
 
-#### createAccount
+### createAccount
 
 Creates an application for a new merchant account.
 
@@ -453,11 +455,11 @@ Example Response:
 }
 ```
 
-### Point-of-Sale
+## Point-of-Sale
 
 To use the point-of-sale capabilities, you'll need to generate a token. These tokens can either have individual client restrictions, so that only allowed clients can use these capabilities. In the use case that you're developing a mobile application, you can generate a token with these capabilities that can be used by many clients and can be included with your application. More information below at `Merchant.createPublicPOSToken`.
 
-#### createInvoice
+### createInvoice
 
 Will create an invoice
 
@@ -508,7 +510,7 @@ Example Response:
 **Note**: The `paymentUrls` are *temporary* and will change and not be available after 15 minutes when the invoice expires, or the invoice has been paid.
 
 
-#### getInvoiceSettings
+### getInvoiceSettings
 
 This will return the merchant information and settings for creating invoices.
 
@@ -525,11 +527,11 @@ Example Response:
 }
 ```
 
-### Merchant
+## Merchant
 
 To use the merchant capabilities, you'll need to generate a token. With public capabilities you can create a token and specify `merchant` as the `facade`, and then use the return `pairingCode` to add the token to your account at *My Account -> API Tokens*.
 
-#### findInvoices
+### findInvoices
 
 Retrieves invoices for the calling merchant based on the query.
 
@@ -614,7 +616,7 @@ When a payment is received, transactions will become available. An invoice can r
 
 ```
 
-#### getInvoice
+### getInvoice
 
 Retrieves a single invoice with additional transaction information.
 
@@ -665,7 +667,7 @@ Example Response:
 
 **Note**: The token returned from this response includes `merchant/invoice` capabilities, including being able to make a refund. We will go into that later below.
 
-#### getLedgers
+### getLedgers
 
 Will return the current balance for each ledger by currency.
 
@@ -686,7 +688,7 @@ Example Response:
 
 ```
 
-#### getLedgerEntries
+### getLedgerEntries
 
 Will return entries for a given ledger.
 
@@ -744,7 +746,7 @@ Example Response:
 
 ```
 
-#### createToken
+### createToken
 
 Will add a new token for the callers merchant resource. A token can be partially created with `public` capabilities, and the `pairingCode` generated can be given to the account owner with `merchant` capabilities to complete and thus activating the token.
 
@@ -782,7 +784,7 @@ Example Response:
 ]
 ```
 
-#### createPublicPOSToken
+### createPublicPOSToken
 
 This will create a token with point-of-sale capabilities, the ability to create invoices. It will not be restricted to a specific Client ID, and can be distributed with mobile applications. The token will appear at *My Account -> API Tokens* and can be further managed.
 
@@ -800,7 +802,7 @@ Example Response:
 ]
 ```
 
-#### Undocumented
+### Undocumented
 
 - createBill
 - getBills
@@ -809,7 +811,7 @@ Example Response:
 - getInvoiceSettings
 - createInvoice
 
-### Merchant/Invoice
+## Merchant/Invoice
 
 To use the `merchant/invoice` capabilities, you'll need to get a token for the `getInvoice` call, as document above in the Merchant section. This provides capabilities for making calls upon a single invoice.
 
@@ -849,7 +851,7 @@ Example Response:
 ```
 
 
-#### creditPartialPayment
+### creditPartialPayment
 
 Will accept a partial payment to complete the payment. Must be done after *six confirmations*, and the invoice has been written to the ledger.
 
@@ -873,7 +875,7 @@ Example Response:
 
 ```
 
-#### creditOverpayment
+### creditOverpayment
 
 Will accept an over payment to complete the payment. Must be done after *six confirmations*, and the invoice has been written to the ledger.
 
@@ -897,17 +899,17 @@ Example Response:
 
 ```
 
-#### getRefunds
+### getRefunds
 
 Will list the refunds on the invoice.
 
 
 
-#### sendNotification
+### sendNotification
 
 Will send an IPN notification for the invoice.
 
-#### Undocumented
+### Undocumented
 
 - getOrphans
 - applyTx
