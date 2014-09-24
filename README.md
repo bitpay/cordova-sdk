@@ -19,31 +19,45 @@ Login to https://test.bitpay.com and navigate to *[My Account > API Tokens](http
 
 ## Invoices
 
-We can easily create invoices and attach custom events on successful payment, or simply direct to the BitPay invoice url.
+We can easily create invoices and attach custom events on successful payment and open a bitcoin wallet in Android.
 
 ```javascript
 
 document.addEventListener("deviceready", function(){
 
-   var Invoice = cordova.require('com.bitpay.sdk.cordova.Invoice');
+    var Bitpay = cordova.require('com.bitpay.sdk.cordova.Bitpay');
 
-   var invoice = new Invoice({
-     price: 100.00,
-     currency: "USD",
-     token: <pos_token>,
-     server: 'test'
-   })
+    var bitpay = new Bitpay({
+        host: 'test.bitpay.com',
+        port: 443,
+        token: '70163c90f...' // as retrieved from above, point-of-sale capability
+    });
 
-   invoice.create(function(err){
-     if ( err ) throw err;
-     // do something when the invoice is created
+    // Create Invoice
+    bitpay.createInvoice({
+        price: 314.15,
+        currency: "USD"
+    }, function(error, invoice){
+      if (error) throw error;
 
-     // add a payment event listener
-     invoice.addEventListener('payment', function(e){
-       // do something when the payment is received
-     })
+      invoice.on('payment', function(){
+        //do something on payment
+      })
 
-   })
+      // open a bitcoin wallet
+      invoice.openWallet();
+
+    });
+
+    // Get Invoice
+    bitpay.getInvoice({
+        invoiceId: "838eonmeore0304"
+    }, function(error, invoice){
+      if (error) throw error;
+
+      // do something with the invoice
+
+    });
 
 }
 
@@ -71,23 +85,47 @@ Now your app is ready to make API calls:
 ```javascript
     // Create Invoice
     pos.call('createInvoice', {
-        price: 123.5,
+        price: 314.15,
         currency: "USD"
-    }, function(error, invoice){
+    }, function(error, data){
       if (error) throw error;
 
       // log the output
-      console.log(invoice);
-
-      // Invoice {
-      //   id: 'the-invoice-id'
-      //   url: 'http://test.bitpay.com/payment/the-invoice-id'
-      //   status: 'new'
-      //   btcPrice: 0.123
-      // }
+      console.log(data);
 
     });
 ```
+
+The above would output:
+
+```javascript
+{
+  url: 'https://test.bitpay.com/invoice?id=RyNzmZEbGwACpmNg8X6jGN',
+  status: 'new',
+  btcPrice: '0.7437',
+  btcDue: '0.7437',
+  price: 314.15,
+  currency: 'USD',
+  exRates: { USD: 422.4228332222813 },
+  invoiceTime: 1411602264553,
+  expirationTime: 1411603164553,
+  currentTime: 1411602264571,
+  id: 'RyNzmZEbGwACpmNg8X6jGN',
+  btcPaid: '0.0000',
+  rate: 422.42,
+  exceptionStatus: false,
+  transactions: [],
+  paymentUrls: {
+    BIP21: 'bitcoin:mwA98U1rwyeVfJVd1CeTP4RxRYPPoZBeBm?amount=0.7437',
+    BIP72: 'bitcoin:mwA98U1rwyeVfJVd1CeTP4RxRYPPoZBeBm?amount=0.7437&r=https://test.bitpay.com/i/RyNzmZEbGwACpmNg8X6jGN',
+    BIP72b: 'bitcoin:?r=https://test.bitpay.com/i/RyNzmZEbGwACpmNg8X6jGN',
+    BIP73: 'https://test.bitpay.com/i/RyNzmZEbGwACpmNg8X6jGN'
+  },
+  token: 'A1fV8rRzJnbdLb61stsEnEFdfWZShzfGnbsz2J3BdkJh2XaVdFxzfGaBQDdVS2sn9M'
+}
+```
+
+**Note**: The `paymentUrls` are *temporary* and will change and not be available after 15 minutes when the invoice expires, or the invoice has been paid.
 
 Using other Capabilities:
 
@@ -101,13 +139,13 @@ Using other Capabilities:
     // Track invoice state
     public.call('getInvoice', {
       invoiceId: <invoice_id>,
-    }, function(error, invoice){
+    }, function(error, data){
        if ( error ) throw error;
        // do something with the invoice response
     });
 
     // Get the current exchange rates
-    public.call('getRates', null, function(error, rates){
+    public.call('getRates', null, function(error, data){
        if ( error ) throw error;
        // do something with the rates response
     });
@@ -123,8 +161,12 @@ Using other Capabilities:
 To explore more of the API, we've include a command line tool to do all of the API calls for help with developing your application, all of the API calls that you can make from the CLI you can make in your Cordova application.
 
 ```
+$ npm install
+
 $ cd plugins/com.bitpay.sdk.cordova/bin
+
 $ ./bitpay.js pair -S test -F merchant
+
 ```
 
 The `-S` option is the name of the server, it can be `test` or `live`, depending on your account. The `-F` option is the name of the capability that you want to use. If you have not already configured a `Client ID` it will prompt you to save one. Once complete you should receive a response with a `pairingCode` that you can then approve at *My Account > API Tokens* and enter the `pairingCode`. Once completed you should be able to issue API calls.
