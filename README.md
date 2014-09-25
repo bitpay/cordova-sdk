@@ -286,6 +286,8 @@ config.saveToken(data, function(err, data){
 
 To get this token again, define what type of access you need:
 
+```javascript
+
 var query = {
   host: 'test.bitpay.com',
   facade: 'merchant'
@@ -300,6 +302,8 @@ config.getToken(query, function(err, tokenObj){
 ```
 
 The request above may not be sufficient when dealing with more than one merchant resource in an application. In this situation a resource will need to be defined:
+
+```javascript
 
 var query = {
   host: 'test.bitpay.com',
