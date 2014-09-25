@@ -168,7 +168,7 @@ For more information about the available calls that can be made, please see the 
 
 To explore more of the API, we've included a command line tool to make API calls. Any API call that you can make from the CLI you can make in your Cordova application. To get started navigate to the plugin directory and install the Node.js dependencies. Configuration files will be stored in `.bitpay` directory of this plugin.
 
-```
+```bash
 $ cd plugins/com.bitpay.sdk.cordova
 
 $ npm install
@@ -183,13 +183,13 @@ The `-S` option is the name of the server, it can be `test` or `live`. The `-F` 
 
 Create an invoice:
 
-```
+```bash
 $ ./bitpay.js call -S test -F merchant -M createInvoice -P '{"price": 100.00, "currency": "USD"}'
 ```
 
 Create tokens for application distribution:
 
-```
+```bash
 $ ./bitpay.js call -S test -F merchant -M createPublicPOSToken
 ```
 
@@ -335,6 +335,7 @@ This plugin provides several modules that can be included in your application.
 ### API Configuration
 
 - `lib/config.js` handles common logic of saving api identites and tokens 
+- `lib/client-id` handles signing data and generating new public/private key pairs
 - `lib/json-localstorage.js` storage adapter for the config that uses localStorage in a browser
 - `lib/json-node-filesystem.js` storage adapter for the config that uses Node.js fs module
 
