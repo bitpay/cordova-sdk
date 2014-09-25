@@ -65,6 +65,10 @@
         <runs/>
     </js-module>
 
+    <js-module src="lib/bitpay.js" name="Bitpay">
+        <runs/>
+    </js-module>
+
     <platform name="android">
       <dependency id="com.borismus.webintent" url="https://github.com/Initsogar/cordova-webintent" commit="3d12378de9f38be900761a0ad06ab697cf6d9add" />
     </platform>

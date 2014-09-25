@@ -11,74 +11,6 @@ if ( typeof( cordova ) != 'undefined' ) {
 
       var data = JSON.parse(params.data);
 
-      if ( params.port === 443 ) {
-        var hostAndPort = 'https://'+params.host;
-      } else {
-        var hostAndPort = 'https://'+params.host+':'+params.port;
-      }
-
-      if ( data.method == 'createInvoice' ) {
-
-        // return invoice
-        return callback(null, {
-          url: 'https://'+hostAndPort+'/invoice?id=UjRsU6h2aMtv9fLmmmG4c9',
-          status: 'new',
-          btcPrice: '0.0250',
-          btcDue: '0.0250',
-          price: 10,
-          currency: 'USD',
-          exRates: { USD: 400 },
-          invoiceTime: 1411343640354,
-          expirationTime: 1411344540354,
-          currentTime: 1411343640371,
-          guid: 'e7363138-039e-090f-632a-7e860844fd5e',
-          id: 'UjRsU6h2aMtv9fLmmmG4c9',
-          btcPaid: '0.0000',
-          rate: 400,
-          exceptionStatus: false,
-          transactions: [],
-          paymentUrls: {
-            BIP21: 'bitcoin:n3GqcctyeLEk4naFtswLRFBv9gC2rkMcHt?amount=0.0250',
-            BIP72: 'bitcoin:n3GqcctyeLEk4naFtswLRFBv9gC2rkMcHt?amount=0.0250&r=https://'+hostAndPort+'/i/UjRsU6h2aMtv9fLmmmG4c9',
-            BIP72b: 'bitcoin:?r='+hostAndPort+'/i/UjRsU6h2aMtv9fLmmmG4c9',
-            BIP73: 'https://'+hostAndPort+'/i/UjRsU6h2aMtv9fLmmmG4c9'
-          },
-          token: '6nvQpDnQwFg8UuiQjofQ3EMnAvxJuQP7et829JVTFEBqdTyHQaLYJ4xgGfAYBLi8WB'
-        });
-
-      }
-
-      if ( data.method == 'getInvoice' ) {
-
-        // return invoice
-        return callback(null, {
-          url: 'https://'+hostAndPort+'/invoice?id=UjRsU6h2aMtv9fLmmmG4c9',
-          status: 'new',
-          btcPrice: '0.0250',
-          btcDue: '0.0250',
-          price: 10,
-          currency: 'USD',
-          exRates: { USD: 400 },
-          invoiceTime: 1411343640354,
-          expirationTime: 1411344540354,
-          currentTime: 1411343640371,
-          guid: 'e7363138-039e-090f-632a-7e860844fd5e',
-          id: 'UjRsU6h2aMtv9fLmmmG4c9',
-          btcPaid: '0.0000',
-          rate: 400,
-          exceptionStatus: false,
-          transactions: [],
-          paymentUrls: {
-            BIP21: 'bitcoin:n3GqcctyeLEk4naFtswLRFBv9gC2rkMcHt?amount=0.0250',
-            BIP72: 'bitcoin:n3GqcctyeLEk4naFtswLRFBv9gC2rkMcHt?amount=0.0250&r=https://'+hostAndPort+'/i/UjRsU6h2aMtv9fLmmmG4c9',
-            BIP72b: 'bitcoin:?r='+hostAndPort+'/i/UjRsU6h2aMtv9fLmmmG4c9',
-            BIP73: 'https://'+hostAndPort+'/i/UjRsU6h2aMtv9fLmmmG4c9'
-          },
-          token: '6nvQpDnQwFg8UuiQjofQ3EMnAvxJuQP7et829JVTFEBqdTyHQaLYJ4xgGfAYBLi8WB'
-        });
-
-      }
-
       if ( data.method == 'getInvoiceBusToken' ) {
         return callback(null, {
           token: 'something',
@@ -92,67 +24,79 @@ if ( typeof( cordova ) != 'undefined' ) {
 
     describe('#constructor', function(){
 
-      it('should create invoice', function(done){
+      var testInvoice = {
+        url: 'https://test.bitpay.com/invoice?id=UjRsU6h2aMtv9fLmmmG4c9',
+        status: 'new',
+        btcPrice: '0.0250',
+        btcDue: '0.0250',
+        price: 10,
+        currency: 'USD',
+        exRates: { USD: 400 },
+        invoiceTime: 1411343640354,
+        expirationTime: 1411344540354,
+        currentTime: 1411343640371,
+        guid: 'e7363138-039e-090f-632a-7e860844fd5e',
+        id: 'UjRsU6h2aMtv9fLmmmG4c9',
+        btcPaid: '0.0000',
+        rate: 400,
+        exceptionStatus: false,
+        transactions: [],
+        paymentUrls: {
+          BIP21: 'bitcoin:n3GqcctyeLEk4naFtswLRFBv9gC2rkMcHt?amount=0.0250',
+          BIP72: 'bitcoin:n3GqcctyeLEk4naFtswLRFBv9gC2rkMcHt?amount=0.0250&r=https://test.bitpay.com/i/UjRsU6h2aMtv9fLmmmG4c9',
+          BIP72b: 'bitcoin:?r=https://test.bitpay.com/i/UjRsU6h2aMtv9fLmmmG4c9',
+          BIP73: 'https://test.bitpay.com/i/UjRsU6h2aMtv9fLmmmG4c9'
+        },
+        token: '6nvQpDnQwFg8UuiQjofQ3EMnAvxJuQP7et829JVTFEBqdTyHQaLYJ4xgGfAYBLi8WB'
+      }
 
-        var invoice = new Invoice({
-          price: 100.00,
-          currency: "USD",
-          server: "test",
-          token: "7etc987hexecef9874ebqto8",
-          request: mockRequest
-        })
+      it('should initialize with invoice data', function(done){
 
-        invoice.create(function(err){
+        try {
+          var invoice = new Invoice({
+            host: 'test.bitpay.com',
+            port: 443,
+            invoice: testInvoice,
+            request: mockRequest
+          });
+        } catch(err){
           should.not.exist(err);
-          done();
-        });
+        }
+
+        done();
 
       });
 
-      it('should create element with existing invoice', function(done){
+      it('should error if invoice is not defined', function(done){
 
-        var invoice = new Invoice({
-          server: 'test',
-          request: mockRequest
-        });
-
-        invoice.find({id: "UjRsU6h2aMtv9fLmmmG4c9"}, function(err){
-          should.not.exist(err);
-          done();
-        });
-
-      });
-
-      it('should error if price and currency are not defined', function(done){
-
-        var invoice = new Invoice({
-          server: "test",
-          token: "7etc987hexecef9874ebqto8",
-          request: mockRequester
-        })
-
-        invoice.create(function(err){
+        try {
+          var invoice = new Invoice({
+            host: "test.bitpay.com",
+            port: 443,
+            request: mockRequest
+          })
+        } catch(err){
           should.exist(err);
-          err.message.should.equal('Please specify a price and currency');
-          done();
-        });
+          err.message.should.equal('Please define the invoice retrieved from the BitPay API')
+        }
+
+        done();
 
       });
 
-      it('should error if no token and no invoice is defined', function(done){
+      it('should error if no host/port defined', function(done){
 
-        var invoice = new Invoice({
-          price: 100.00,
-          currency: "USD",
-          server: "test",
-          request: mockRequest
-        })
-
-        invoice.create(function(err){
+        try {
+          var invoice = new Invoice({
+            invoice: testInvoice,
+            request: mockRequest
+          })
+        } catch(err){
           should.exist(err);
-          err.message.should.equal('Please specify a token with the capability to create invoices');
-          done();
-        });
+          err.message.should.equal('Please specify a server host')
+        }
+
+        done();
 
       });
 
