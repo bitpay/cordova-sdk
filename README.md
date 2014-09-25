@@ -6,7 +6,7 @@ This is a plugin for Cordova/PhoneGap and provides several modules that can be i
 
 Install the SDK plugin:
 
-```
+```bash
 $ cordova plugin add https://github.com/bitpay/cordova-sdk.git
 
 ```
@@ -19,7 +19,7 @@ Login to https://test.bitpay.com and navigate to *[My Account > API Tokens](http
 
 ## Invoices
 
-We can easily create invoices, add behavior for payment events and open a bitcoin wallet in Android.
+We can easily create invoices, add behavior for payment events and open a bitcoin wallet in mobile apps.
 
 ```javascript
 
