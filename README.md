@@ -2,7 +2,7 @@
 
 # Getting Started
 
-This is a plugin for Cordova/PhoneGap and provides several modules that can be included in your application. If you do not already have an account at BitPay, please go to https://test.bitpay.com/start to signup for development account, or for production at https://bitpay.com/start. After registration, depending on the kind of application you are building you may need to go through a pairing process for some of the API capabilities. 
+This is a plugin for Cordova/PhoneGap and provides several modules that can be included in your application. If you do not already have an account at BitPay, please go to https://test.bitpay.com/start to signup for development account, or for production at https://bitpay.com/start. After registration, depending on the kind of application you are building you may need to go through a pairing process for some of the API capabilities.
 
 Install the SDK plugin:
 
@@ -189,17 +189,85 @@ Create tokens for application distribution:
 $ ./bitpay.js call -S test -F merchant -M createPublicPOSToken
 ```
 
+## API Configuration
+
+For additional security, a token may have a policy that requires every call to be cryptographically signed. The api client, `lib/rpc-client.js`, will handle this appropriatly if a Client ID object, `lib/client-id.js`, is passed as an identity parameter. However first we will need to setup an identity.
+
+To save a new public/private key pair:
+
+```javascript
+
+document.addEventListener("deviceready", function(){
+
+  // setup a storage instance
+  var Storage = cordova.require('com.bitpay.sdk.cordova.JSONLocalstorage');
+  var storage = new Storage();
+
+  // pass storage to the configuration
+  var config = new Config(storage);
+
+  // save an identity
+  config.saveIdentity({label: 'Satoshis Widgets'}, false, function(err, identity){
+
+     // sign data
+     var signature = identity.sign('cellar door');
+
+     // get identity inforamtion
+     var publicKey = identity.info.publicKey;
+     var id = identity.info.id;
+
+  });
+
+})
+```
+
+The above identity is stored unencrypted and can be useful in situations where it's possible to trust the device security.
+
+To encrypt the private key when it's stored you can include a passphrase:
+
+```javascript
+
+  // encrypt the saved private key
+  config.saveIdentity({label: 'Satoshis Widgets'}, 'passphrase goes here', function(err, identity){
+    // do something with the identity
+  });
+
+```
+
+To decrypt the private key, you can do include it when getting the identity:
+
+```javascript
+
+  // encrypt the saved private key
+  config.getIdentity('Tf4iyFq4hgEf3iVHkeihR9DKPVpqEWF5crd', 'passphrase goes here', function(err, identity){
+    // do something with the identity
+  });
+
+```
+
+It's also possible to configure a Client ID with several types of nonces: `time`, `increment` and `disabled`.
+
+```javascript
+
+  config.saveIdentity({label: 'Satoshis Widgets', nonceType: 'increment'}, false, function(err, identity){
+    // now everytime that nonce is called it will be incremented
+    var nonce = identity.nonce();
+
+  });
+
+```
+
 ## Available Modules
 
-This plugin provides several modules that can be included in your application. 
+This plugin provides several modules that can be included in your application.
 
 ### API Requests
-There is a client, `lib/rpc-client.js`, that handles signing and determining the parameters of the request that will work with several request adapters. There are two adapters included, one that uses XHR, `lib/request-xhr.js`, for use in a browser, and another that uses the node https module, `request-node-https.js`. New adapters can be added so long as they respond and handle the same params and return the response. 
+There is a client, `lib/rpc-client.js`, that handles signing and determining the parameters of the request that will work with several request adapters. There are two adapters included, one that uses XHR, `lib/request-xhr.js`, for use in a browser, and another that uses the node https module, `request-node-https.js`. New adapters can be added so long as they respond and handle the same params and return the response.
 ### API Configuration
-There is a configuration module, `lib/config.js`, for saving Client IDs and API Tokens that will work with several storage adapters. Two have been included, one that uses Localstorage, `lib/json-localstorage.js` and another that uses the node fs module, `lib/json-node-filesystem.js`. New adapters can be written so lon as they handle the same params and return the same response.
+There is a configuration module, `lib/config.js`, for saving Client IDs and API Tokens that will work with several storage adapters. Two have been included, one that uses Localstorage, `lib/json-localstorage.js` and another that uses the node fs module, `lib/json-node-filesystem.js`. New adapters can be written so long as they handle the same params and return the same response.
 
 ### Invoices
-There is a few modules included, `lib/invoice.js` and `lib/bitpay.js` that are cordova specific, and include features for creating, retrieving and tracking the state of an invoice. In addition to opening a wallet and generating QR codes.
+There is a few modules included, `lib/invoice.js` and `lib/bitpay.js` that are cordova specific, and include features for creating, retrieving and tracking the state of an invoice. In addition to opening a wallet and generating QR codes, as demontrated in examples above.
 
 # BitPay API Calls
 
