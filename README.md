@@ -409,7 +409,7 @@ Example Response:
 [
   {
     code: 'BTC',
-    symbol: 'à¸¿',
+    symbol: '฿',
     precision: 4,
     exchangePctFee: 200,
     payoutEnabled: true,
