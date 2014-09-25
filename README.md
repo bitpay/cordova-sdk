@@ -2,7 +2,7 @@
 
 # Getting Started
 
-If you do not already have an account at BitPay, please go to https://test.bitpay.com to signup. After registration, depending on the kind of application you are building you may need to go through a pairing process for some of the API capabilities. This is a cordova/phonegap plugin, and will make available several JavaScript files that you can use to easily integrate the BitPay API into your application.
+This is a plugin for Cordova/PhoneGap and provides several modules that can be included in your application. If you do not already have an account at BitPay, please go to https://test.bitpay.com/start to signup for development account, or for production at https://bitpay.com/start. After registration, depending on the kind of application you are building you may need to go through a pairing process for some of the API capabilities. 
 
 Install the SDK plugin:
 
@@ -19,7 +19,7 @@ Login to https://test.bitpay.com and navigate to *[My Account > API Tokens](http
 
 ## Invoices
 
-We can easily create invoices and attach custom events on successful payment and open a bitcoin wallet in Android.
+We can easily create invoices, add behavior for payment events and open a bitcoin wallet in Android.
 
 ```javascript
 
@@ -40,18 +40,24 @@ document.addEventListener("deviceready", function(){
     }, function(error, invoice){
       if (error) throw error;
 
-      invoice.on('payment', function(){
+      invoice.on('payment', function(e){
+        var invoice = e.detail;
         //do something on payment
       })
 
-      // open a bitcoin wallet
+      // use this to open a bitcoin wallet
       invoice.openWallet();
+
+      // generate a qrcode
+      invoice.getQrCode({format: 'BIP72'}, function(elm){
+        // do something with the qrcode elm
+      });
 
     });
 
     // Get Invoice
     bitpay.getInvoice({
-        invoiceId: 'RyNzmZEbGwACpmNg8X6jGN'
+        id: 'RyNzmZEbGwACpmNg8X6jGN'
     }, function(error, invoice){
       if (error) throw error;
 
@@ -63,7 +69,7 @@ document.addEventListener("deviceready", function(){
 
 ```
 
-For additional capabilities with invoices please refer to the `Merchant.findInvoices` section below.
+For additional capabilities with invoices please refer to the [`Merchant.findInvoices`](#findinvoices) section below.
 
 ## Using the API Client
 
@@ -138,7 +144,7 @@ Using other Capabilities:
 
     // Track invoice state
     public.call('getInvoice', {
-      invoiceId: 'RyNzmZEbGwACpmNg8X6jGN',
+      id: 'RyNzmZEbGwACpmNg8X6jGN',
     }, function(error, data){
        if ( error ) throw error;
        // do something with the invoice response
@@ -158,7 +164,7 @@ Using other Capabilities:
 
 ## Using the Command Line Tool
 
-To explore more of the API, we've include a command line tool to do all of the API calls for help with developing your application, all of the API calls that you can make from the CLI you can make in your Cordova application.
+To explore more of the API, we've included a command line tool to make API calls. Any API call that you can make from the CLI you can make in your Cordova application. To get started, install the dependencies and navigate to the plugin bin directory. Configuration files will be stored in `.bitpay` directory of this plugin.
 
 ```
 $ npm install
@@ -169,7 +175,7 @@ $ ./bitpay.js pair -S test -F merchant
 
 ```
 
-The `-S` option is the name of the server, it can be `test` or `live`, depending on your account. The `-F` option is the name of the capability that you want to use. If you have not already configured a `Client ID` it will prompt you to save one. Once complete you should receive a response with a `pairingCode` that you can then approve at *My Account > API Tokens* and enter the `pairingCode`. Once completed you should be able to issue API calls.
+The `-S` option is the name of the server, it can be `test` or `live`. The `-F` option is the name of the capability that you want to use. If you have not already configured a `Client ID` it will prompt you to save one. Once complete you should receive a response with a `pairingCode` that you can then approve at *My Account > API Tokens* and enter the `pairingCode`. Once completed you should be able to issue API calls.
 
 Create an invoice:
 
@@ -182,6 +188,18 @@ Create tokens for application distribution:
 ```
 $ ./bitpay.js call -S test -F merchant -M createPublicPOSToken
 ```
+
+## Available Modules
+
+This plugin provides several modules that can be included in your application. 
+
+### API Requests
+There is a client, `lib/rpc-client.js`, that handles signing and determining the parameters of the request that will work with several request adapters. There are two adapters included, one that uses XHR, `lib/request-xhr.js`, for use in a browser, and another that uses the node https module, `request-node-https.js`. New adapters can be added so long as they respond and handle the same params and return the response. 
+### API Configuration
+There is a configuration module, `lib/config.js`, for saving Client IDs and API Tokens that will work with several storage adapters. Two have been included, one that uses Localstorage, `lib/json-localstorage.js` and another that uses the node fs module, `lib/json-node-filesystem.js`. New adapters can be written so lon as they handle the same params and return the same response.
+
+### Invoices
+There is a few modules included, `lib/invoice.js` and `lib/bitpay.js` that are cordova specific, and include features for creating, retrieving and tracking the state of an invoice. In addition to opening a wallet and generating QR codes.
 
 # BitPay API Calls
 
