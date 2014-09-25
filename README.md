@@ -69,7 +69,7 @@ document.addEventListener("deviceready", function(){
 
 ```
 
-For additional capabilities with invoices please refer to the [`Merchant.findInvoices`](#findinvoices) section below.
+For additional capabilities with invoices please refer to the [Merchant.findInvoices](#findinvoices) section below.
 
 ## Using the API Client
 
@@ -158,6 +158,8 @@ Using other Capabilities:
 
 ```
 
+For more information about the available calls that can be made, please see the [BitPay API Calls](#bitpay-api-calls) section below.
+
 ## Sample Applications
 
 - Music store app using the SDK [here](https://github.com/bitpay/sample-cordova-skd.git).
@@ -191,7 +193,9 @@ $ ./bitpay.js call -S test -F merchant -M createPublicPOSToken
 
 ## API Configuration
 
-For additional security, a token may have a policy that requires every call to be cryptographically signed. The api client, `lib/rpc-client.js`, will handle this appropriatly if a Client ID object, `lib/client-id.js`, is passed as an identity parameter. However first we will need to setup an identity.
+### Identity
+
+For additional security, a token may have a policy that requires every call to be cryptographically signed. The api client, `lib/rpc-client.js`, will handle this appropriately if a Client ID object, `lib/client-id.js`, is passed as an identity parameter. However first we will need to setup an identity.
 
 To save a new public/private key pair:
 
@@ -221,9 +225,7 @@ document.addEventListener("deviceready", function(){
 })
 ```
 
-The above identity is stored unencrypted and can be useful in situations where it's possible to trust the device security.
-
-To encrypt the private key when it's stored you can include a passphrase:
+The above identity is stored unencrypted and can be useful in situations where it's possible to trust the device security. To encrypt the private key when it's stored you can include a passphrase:
 
 ```javascript
 
@@ -234,7 +236,7 @@ To encrypt the private key when it's stored you can include a passphrase:
 
 ```
 
-To decrypt the private key, you can do include it when getting the identity:
+To decrypt the private key, you can include a passphrase when getting the identity:
 
 ```javascript
 
@@ -257,7 +259,64 @@ It's also possible to configure a Client ID with several types of nonces: `time`
 
 ```
 
-## Available Modules
+### Tokens
+
+Most applications will persist at least one token, and in more advanced applications persisting multiple tokens may be nessassary. This uses the same configuration as identities, as described above.
+
+To save a new token, as retrieved via the API:
+
+```javascript
+
+var data = {
+  host: 'test.bitpay.com',
+  facade: 'merchant',
+  token: '2feggonet56e6utrjrjmuh555urpw874',
+  label: 'BitPay Cordova SDK',
+  identity: 'Tf4iyFq4hgEf3iVHkeihR9DKPVpqEWF5crd'
+};
+
+config.saveToken(data, function(err, data){
+  if (err) throw err;
+
+  // the token has been persisted
+
+});
+
+```
+
+To get this token again, define what type of access you need:
+
+var query = {
+  host: 'test.bitpay.com',
+  facade: 'merchant'
+};
+
+config.getToken(query, function(err, tokenObj){
+
+  // do something with the tokenObj
+
+});
+
+```
+
+The request above may not be sufficient when dealing with more than one merchant resource in an application. In this situation a resource will need to be defined:
+
+var query = {
+  host: 'test.bitpay.com',
+  facade: 'merchant',
+  resource: '8ete802394eono39eo320utp'
+};
+
+config.getToken(query, function(err, tokenObj){
+  if (err) throw err;
+
+  // do something with the tokenObj
+});
+
+```
+
+
+## Module Overview
 
 This plugin provides several modules that can be included in your application.
 
