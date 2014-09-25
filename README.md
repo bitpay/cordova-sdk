@@ -166,12 +166,14 @@ For more information about the available calls that can be made, please see the 
 
 ## Using the Command Line Tool
 
-To explore more of the API, we've included a command line tool to make API calls. Any API call that you can make from the CLI you can make in your Cordova application. To get started, install the dependencies and navigate to the plugin bin directory. Configuration files will be stored in `.bitpay` directory of this plugin.
+To explore more of the API, we've included a command line tool to make API calls. Any API call that you can make from the CLI you can make in your Cordova application. To get started navigate to the plugin directory and install the Node.js dependencies. Configuration files will be stored in `.bitpay` directory of this plugin.
 
 ```
+$ cd plugins/com.bitpay.sdk.cordova
+
 $ npm install
 
-$ cd plugins/com.bitpay.sdk.cordova/bin
+$ cd bin
 
 $ ./bitpay.js pair -S test -F merchant
 
@@ -225,7 +227,7 @@ document.addEventListener("deviceready", function(){
 })
 ```
 
-The above identity is stored unencrypted and can be useful in situations where it's possible to trust the device security. To encrypt the private key when it's stored you can include a passphrase:
+The above identity is stored unencrypted. To encrypt the private key you can specify a passphrase:
 
 ```javascript
 
@@ -236,7 +238,7 @@ The above identity is stored unencrypted and can be useful in situations where i
 
 ```
 
-To decrypt the private key, you can include a passphrase when getting the identity:
+To decrypt the private key you can include a passphrase when getting the identity:
 
 ```javascript
 
@@ -261,9 +263,9 @@ It's also possible to configure a Client ID with several types of nonces: `time`
 
 ### Tokens
 
-Most applications will persist at least one token, and in more advanced applications persisting multiple tokens may be nessassary. This uses the same configuration as identities, as described above.
+Most applications will persist at least one token, and in more advanced applications persisting multiple tokens may be nessassary. The example below uses the same `config` as above.
 
-To save a new token, as retrieved via the API:
+To save a new token as retrieved via the API:
 
 ```javascript
 
@@ -284,7 +286,7 @@ config.saveToken(data, function(err, data){
 
 ```
 
-To get this token again, define what type of access you need:
+To get this token again you can define what type of access you need:
 
 ```javascript
 
@@ -301,7 +303,7 @@ config.getToken(query, function(err, tokenObj){
 
 ```
 
-The request above may not be sufficient when dealing with more than one merchant resource in an application. In this situation a resource will need to be defined:
+The request above may not be sufficient when dealing with more than one merchant resource in an application; in this situation a resource will need to be defined:
 
 ```javascript
 
@@ -325,18 +327,27 @@ config.getToken(query, function(err, tokenObj){
 This plugin provides several modules that can be included in your application.
 
 ### API Requests
-There is a client, `lib/rpc-client.js`, that handles signing and determining the parameters of the request that will work with several request adapters. There are two adapters included, one that uses XHR, `lib/request-xhr.js`, for use in a browser, and another that uses the node https module, `request-node-https.js`. New adapters can be added so long as they respond and handle the same params and return the response.
+
+- `lib/rpc-client.js` handles signing and determining the parameters of the request
+- `lib/request-xhr.js` a request adapter for the client to work in a browser
+- `request-node-https.js` a request adapter that uses the Node.js https module
+
 ### API Configuration
-There is a configuration module, `lib/config.js`, for saving Client IDs and API Tokens that will work with several storage adapters. Two have been included, one that uses Localstorage, `lib/json-localstorage.js` and another that uses the node fs module, `lib/json-node-filesystem.js`. New adapters can be written so long as they handle the same params and return the same response.
+
+- `lib/config.js` handles common logic of saving api identites and tokens 
+- `lib/json-localstorage.js` storage adapter for the config that uses localStorage in a browser
+- `lib/json-node-filesystem.js` storage adapter for the config that uses Node.js fs module
 
 ### Invoices
-There is a few modules included, `lib/invoice.js` and `lib/bitpay.js` that are cordova specific, and include features for creating, retrieving and tracking the state of an invoice. In addition to opening a wallet and generating QR codes, as demontrated in examples above.
+
+- `lib/invoice.js` subscribe to payment events and generate QR Codes and open bitcoin wallets from mobile applications
+- `lib/bitpay.js` wraps together the api client and invoice for common invoice usage
 
 # BitPay API Calls
 
 ## Public
 
-To use the public capabilities do not include a token or identity *(sign the API call)*.
+To use the public capabilities do not include a token or identity with the client.
 
 ### createToken
 
@@ -648,7 +659,7 @@ Example Response:
 
 ## Point-of-Sale
 
-To use the point-of-sale capabilities, you'll need to generate a token. These tokens can either have individual client restrictions, so that only allowed clients can use these capabilities. In the use case that you're developing a mobile application, you can generate a token with these capabilities that can be used by many clients and can be included with your application. More information below at `Merchant.createPublicPOSToken`.
+To use the *point-of-sale* capabilities on a *merchant* resource, you'll need to generate a token. These tokens can have individual client restrictions, based on an identity. Additionaly, if you're developing a mobile application, you can generate a token without an individual client restriction that can be used by many clients and can be included with your application. More information below at `Merchant.createPublicPOSToken`.
 
 ### createInvoice
 
@@ -721,7 +732,7 @@ Example Response:
 
 ## Merchant
 
-To use the merchant capabilities on a merchant resource, you'll need to generate a token. With public capabilities you can create a token and specify `merchant` as the `facade`, and then use the return `pairingCode` to add the token to your account at *My Account -> API Tokens*, or give this `pairingCode` to an merchant organization administrator to add and approve.
+To use the *merchant* capabilities on a *merchant* resource, you'll need to generate a token. With public capabilities you can create a token and specify *merchant* as the `facade`, and then use the return `pairingCode` to add the token to your account at *My Account -> API Tokens*, or give this `pairingCode` to an merchant organization administrator to add and approve.
 
 ### findInvoices
 
@@ -1009,7 +1020,7 @@ Example Response:
 
 ## Merchant/Invoice
 
-To use the `merchant` capabilities on an `invoice` resource, you'll need to get a token for the `getInvoice` call, as documented above in the Merchant section. When using this token, the following capabilities will be available for acting upon an invoice.
+To use the *merchant* capabilities on an *invoice* resource, you'll need to get a token for the `getInvoice` call, as documented above in the Merchant section. When using this token, the following capabilities will be available for acting upon an invoice.
 
 ### refund
 
