@@ -22,6 +22,7 @@
     <asset src="test/test.request.js" target="test.request.js" />
     <asset src="test/test.json-storage.js" target="test.json-storage.js" />
     <asset src="test/test.invoice.js" target="test.invoice.js" />
+    <asset src="test/test.bitpay.js" target="test.bitpay.js" />
     <asset src="test/test.html" target="index.html" />
     -->
 
