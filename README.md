@@ -42,9 +42,7 @@ document.addEventListener("deviceready", function(){
 
       invoice.on('payment', function(e){
         // do something on payment
-
-        var data = e.detail;
-        var paid = data.btcPaid;
+        var paid = invoice.data.btcPaid;
       })
 
       // get the invoice url
