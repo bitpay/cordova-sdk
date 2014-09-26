@@ -30,10 +30,6 @@
        <runs/>
     </js-module>
 
-    <js-module src="dist/custom-event-polyfill.js" name="CustomEvent">
-        <runs/>
-    </js-module>
-
     <js-module src="dist/qrcode.js" name="QRCode">
         <runs/>
     </js-module>

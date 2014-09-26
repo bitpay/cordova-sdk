@@ -56,7 +56,7 @@ if ( typeof( cordova ) != 'undefined' ) {
           var invoice = new Invoice({
             host: 'test.bitpay.com',
             port: 443,
-            invoice: testInvoice,
+            data: testInvoice,
             request: mockRequest
           });
         } catch(err){

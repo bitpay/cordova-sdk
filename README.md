@@ -41,12 +41,17 @@ document.addEventListener("deviceready", function(){
       if (error) throw error;
 
       invoice.on('payment', function(e){
-        var invoice = e.detail;
-        //do something on payment
+        // do something on payment
+
+        var data = e.detail;
+        var paid = data.btcPaid;
       })
 
-      // use this to open a bitcoin wallet
-      invoice.openWallet();
+      // get the invoice url
+      var url = invoice.data.url;
+
+      // use this to open a bitcoin mobile wallet
+      invoice.openWallet({format: 'BIP72'});
 
       // generate a qrcode
       invoice.getQrCode({format: 'BIP72'}, function(elm){
