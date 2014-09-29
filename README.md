@@ -1018,9 +1018,9 @@ Example Response:
 - createBill
 - getBills
 - getBillById
-- (getInvoiceBusToken)[#getinvoicebustoken] *(see public)*
-- (getInvoiceSettings)[#getinvoicesettings] *(see point-of-sale)*
-- (createInvoice)[#createinvoice] *(see point-of-sale)*
+- [getInvoiceBusToken](#getinvoicebustoken) *(see public)*
+- [getInvoiceSettings](#getinvoicesettings) *(see point-of-sale)*
+- [createInvoice](#createinvoice) *(see point-of-sale)*
 
 ## Merchant/Invoice
 
