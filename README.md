@@ -333,11 +333,11 @@ This plugin provides several modules that can be included in your application.
 
 - `lib/rpc-client.js` handles signing and determining the parameters of the request
 - `lib/request-xhr.js` a request adapter for the client to work in a browser
-- `request-node-https.js` a request adapter that uses the Node.js https module
+- `lib/request-node-https.js` a request adapter that uses the Node.js https module
 
 ### API Configuration
 
-- `lib/config.js` handles common logic of saving api identites and tokens 
+- `lib/config.js` handles common logic of saving api identites and tokens
 - `lib/client-id` handles signing data and generating new public/private key pairs
 - `lib/json-localstorage.js` storage adapter for the config that uses localStorage in a browser
 - `lib/json-node-filesystem.js` storage adapter for the config that uses Node.js fs module
@@ -355,7 +355,7 @@ To use the public capabilities do not include a token or identity with the clien
 
 ### createToken
 
-Creates or claims an access token. If you supply an `id` and `facade` you will receive a `pairingCode` that you can either give to an account owner to approve yourself by authenticating at the *My Account -> API Tokens*. If you already have a `pairingCode`, you can pass both an `id` and `pairingCode` to link your Client ID to the token.
+Creates or claims an access token. If you supply an `id` and `facade` you will receive a `pairingCode` that you can either give to an account owner, or approve the token yourself by authenticating at the *My Account -> API Tokens*. If you already have a `pairingCode`, you can pass both an `id` and `pairingCode` to link your Client ID to the token.
 
 Parameters:
 
@@ -988,9 +988,9 @@ Example Response:
     facade: 'merchant',
     dateCreated: 1411520974852,
     policies: [{
-         policy: 'id',
-         method: 'require',
-         params: ['TfDzkkFs7vTe8yHyb28NDZ56Jt2VBAF3ysd']
+      policy: 'id',
+      method: 'require',
+      params: ['TfDzkkFs7vTe8yHyb28NDZ56Jt2VBAF3ysd']
     ]}
    }
 ]
@@ -1018,13 +1018,13 @@ Example Response:
 - createBill
 - getBills
 - getBillById
-- getInvoiceBusToken *(see public)*
-- getInvoiceSettings *(see point-of-sale)*
-- createInvoice *(see point-of-sale)*
+- (getInvoiceBusToken)[#getinvoicebustoken] *(see public)*
+- (getInvoiceSettings)[#getinvoicesettings] *(see point-of-sale)*
+- (createInvoice)[#createinvoice] *(see point-of-sale)*
 
 ## Merchant/Invoice
 
-To use the *merchant* capabilities on an *invoice* resource, you'll need to get a token for the `getInvoice` call, as documented above in the Merchant section. When using this token, the following capabilities will be available for acting upon an invoice.
+To use the *merchant* capabilities on an *invoice* resource, you'll need to get a token for the `getInvoice` call, as documented above in the (Merchant)[#getinvoice] section. When using this token, the following capabilities will be available for acting upon an invoice.
 
 ### refund
 
