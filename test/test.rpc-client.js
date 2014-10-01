@@ -115,7 +115,7 @@ describe('Client', function(){
 
     it('should error if no method', function(done){
       try {
-        client.call();
+        client.callMethod();
       } catch (err){
         should.exist(err);
         err.message.should.equal('Please include a method string');
@@ -125,7 +125,7 @@ describe('Client', function(){
 
     it('should error if method not a string', function(done){
       try {
-        client.call({});
+        client.callMethod({});
       } catch (err){
         should.exist(err);
         err.message.should.equal('Please include a method string');
@@ -135,7 +135,7 @@ describe('Client', function(){
 
     it('should error if no params', function(done){
       try {
-        client.call('createInvoice');
+        client.callMethod('createInvoice');
       } catch (err){
         should.exist(err);
         err.message.should.equal('Please include params object');
@@ -145,7 +145,7 @@ describe('Client', function(){
 
     it('should error if params not an object', function(done){
       try {
-        client.call('createInvoice', '{"price": 10.0, "currency": "USD"}');
+        client.callMethod('createInvoice', '{"price": 10.0, "currency": "USD"}');
       } catch (err){
         should.exist(err);
         err.message.should.equal('Please include params object');
@@ -155,7 +155,7 @@ describe('Client', function(){
 
     it('should error if no callback', function(done){
       try {
-        client.call('createInvoice', {});
+        client.callMethod('createInvoice', {});
       } catch (err){
         should.exist(err);
         err.message.should.equal('Please include a callback function');
@@ -165,7 +165,7 @@ describe('Client', function(){
 
     it('should error if callback is not a function', function(done){
       try {
-        client.call('createInvoice', {}, 'handleResponse');
+        client.callMethod('createInvoice', {}, 'handleResponse');
       } catch (err){
         should.exist(err);
         err.message.should.equal('Please include a callback function');
@@ -187,7 +187,7 @@ describe('Client', function(){
         identity: identity
       });
 
-      posclient.call('createInvoice', {price: 100.00, currency: "USD"}, function(err, invoice){
+      posclient.callMethod('createInvoice', {price: 100.00, currency: "USD"}, function(err, invoice){
         should.not.exist(err);
         should.exist(invoice);
         done();
@@ -203,7 +203,7 @@ describe('Client', function(){
         port: 443
       });
 
-      pubclient.call('createInvoice', {price: 100.00, currency: "USD"}, function(err, rates){
+      pubclient.callMethod('createInvoice', {price: 100.00, currency: "USD"}, function(err, rates){
         should.not.exist(err);
         should.exist(rates);
         done();

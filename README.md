@@ -93,7 +93,7 @@ Now your app is ready to make API calls:
 
 ```javascript
     // Create Invoice
-    pos.call('createInvoice', {
+    pos.callMethod('createInvoice', {
         price: 314.15,
         currency: 'USD'
     }, function(error, data){
@@ -140,13 +140,13 @@ Using other Capabilities:
 
 ```javascript
     // To use public capabilities, do not pass a token
-    var public = new BitpayRPCClient({
+    var public = new Client({
         host: 'test.bitpay.com',
         port: 443
     });
 
     // Track invoice state
-    public.call('getInvoice', {
+    public.callMethod('getInvoice', {
       id: 'RyNzmZEbGwACpmNg8X6jGN',
     }, function(error, data){
        if ( error ) throw error;
@@ -154,7 +154,7 @@ Using other Capabilities:
     });
 
     // Get the current exchange rates
-    public.call('getRates', null, function(error, data){
+    public.callMethod('getRates', null, function(error, data){
        if ( error ) throw error;
        // do something with the rates response
     });
