@@ -162,7 +162,7 @@ program
 
         var client = new RPCClient(clientConfig);
 
-        client.call( 'createToken', {id: identity.info.id, facade: cmd.facade, label: 'bitpay-cordova-sdk'}, function(err, data){
+        client.callMethod( 'createToken', {id: identity.info.id, facade: cmd.facade, label: 'bitpay-cordova-sdk'}, function(err, data){
           if ( err ) throw err;
 
           var responseData = data[0];
@@ -298,7 +298,7 @@ program
 
         var client = new RPCClient(clientConfig);
 
-        client.call( cmd.method, params, function(err, data){
+        client.callMethod( cmd.method, params, function(err, data){
           if ( err ) {
             console.log(util.inspect(err, {
               depth: null, colors: true
@@ -351,7 +351,7 @@ program
       if ( cmd.resource ) {
         facade.resource = cmd.resource
       }
-      
+
       if ( query.facade == 'public') {
         // do not sign or pass token
         handleToken(null, false);
