@@ -324,7 +324,6 @@ config.getToken(query, function(err, tokenObj){
 
 ```
 
-
 ## Module Overview
 
 This plugin provides several modules that can be included in your application.
@@ -346,6 +345,7 @@ This plugin provides several modules that can be included in your application.
 
 - `lib/invoice.js` subscribe to payment events and generate QR Codes and open bitcoin wallets from mobile applications
 - `lib/bitpay.js` wraps together the api client and invoice for common invoice usage
+
 
 # BitPay API Calls
 
@@ -804,7 +804,8 @@ Status          | Description
 -------------   | -------------
 new             | The invoice has not yet been fully paid
 paid            | Received payment however has not yet been fully confirmed
-complete        | Payment confirmed based on the `transaction` speed settings
+complete        | Payment confirmed by BitPay and invoice has been credit
+confirmed       | Payment confirmed based on the `transaction` speed settings for the invoice
 expired         | Can no longer receive payments
 invalid         | The invoice has received payment, however was invalid
 
