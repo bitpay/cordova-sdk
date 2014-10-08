@@ -10,24 +10,14 @@ $ cordova plugin add https://github.com/bitpay/cordova-sdk.git
 
 ```
 
-## Setup credentials
+## Setup Credentials
 
 ### 1. Create a Bitpay Account
 Please go to https://bitpay.com to create an account. You can also create a development account at [https://test.bitpay.com](https://test.bitpay.com/start).
 
 ### 2. Generate an Application Token
 
-Go to [*My Account* > *API Tokens*](https://bitpay.com/api-tokens) section. Click on the _Add New Token_ button and make a token with the `Point-of-Sale` capability for multiple clients. You can then include this token with your application.
-
-Open the bin folder and excecute the pairing utility using the created token.
-```bash
-$ npm install
-$ ./bin/bitpay.js pair -S test -F merchant
-Successfully paired. Your client token is:
-70163c90f18df866d7a4ec3b8f7215f0013e3f81749f6222938a1f4d9ce3e97e
-```
-This token can now be used to instantiate a Bitpay client object. To read more about the CLI tool go [here](docs/cli.md).
-
+Go to [My Account > API Tokens](https://bitpay.com/api-tokens) section. Click on the _Add New Token_ button and make a token with the `Point-of-Sale` capability for multiple clients. You can then include this token with your application.
 
 ## Sample Code and Usage
 
@@ -102,7 +92,7 @@ bitpay.openInvoice(invoice);
 ```
 
 ### Advance usage
-Under the hood, the SDK works thanks to a powerful RPC client that you can also use.
+Under the hood, the SDK works thanks to a powerful RPC client that you can also use. To use more of the advanced capabilities, such as the merchant facade, you'll need to pair the client.
 
 ```javascript
 var Client = cordova.require('com.bitpay.sdk.cordova.RPCClient')
@@ -127,12 +117,11 @@ Take a look at [this project](https://github.com/bitpay/cordova-sdk-sample)
 where an integration with a mock application is shown.
 
 ### BitPay's API docs
-To read more about invoices refer to the BitPay's [API documentation](https://bitpay.com/api)
-
+To read more about invoices refer to the included [API documentation](docs/api.md).
 
 ## Troubleshooting
 
-Contact support via [our official helpdesk](https://support.bitpay.com) or [ask the community](https://bitpay.com/bitpay/cordova-sdk/issues).
+Contact support via [our official helpdesk](https://support.bitpay.com) or [ask the community](https://github.com/bitpay/cordova-sdk/issues).
 
 ## License
 

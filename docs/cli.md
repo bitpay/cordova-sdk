@@ -27,5 +27,4 @@ Create tokens for application distribution:
 $ ./bitpay.js call -S test -F merchant -M createPublicPOSToken
 ```
 
-## API Documentation
-To read more about the API refer to the BitPay's [API documentation](https://bitpay.com/api)
+To read more API calls that are possible please refer to the included [API documentation](docs/api.md)
