@@ -26,7 +26,7 @@ $ ./bin/bitpay.js pair -S test -F merchant
 Successfully paired. Your client token is:
 70163c90f18df866d7a4ec3b8f7215f0013e3f81749f6222938a1f4d9ce3e97e
 ```
-This token can now be used to instantiate a Bitpay client object. To read more about the CLI tool go [here](doc/cli.md).
+This token can now be used to instantiate a Bitpay client object. To read more about the CLI tool go [here](docs/cli.md).
 
 
 ## Sample Code and Usage
@@ -97,8 +97,8 @@ bitpay.openWallet(invoice);
 // or open the invoice in a native browser
 bitpay.openBrowser(invoice); // 
 
-// try with openWallet first and default to browser on failure
-bitpay.open(invoice);
+// try openWallet first and default to browser on failure
+bitpay.openInvoice(invoice);
 ```
 
 ### Advance usage
@@ -117,7 +117,7 @@ public.callMethod(..., function(error, data){
   ...
 });
 ```
-To read more about the RPC client go to [Advanced usage](docs/advanced_usage.md)
+To read more about the RPC client go to the [advanced usage](docs/advanced_usage.md) section.
 
 
 # More Samples and Documentation
