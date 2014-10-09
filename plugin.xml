@@ -38,10 +38,6 @@
         <runs/>
     </js-module>
 
-    <js-module src="dist/EventSource.js" name="EventSource">
-        <runs/>
-    </js-module>
-
     <js-module src="lib/client-id.js" name="ClientId">
         <runs/>
     </js-module>
