@@ -82,13 +82,13 @@ bitpay.isWalletAvailable(function(available) {
 ### Display invoice
 ```javascript
 // launch an intent to open it on a native wallet
-bitpay.openWallet(invoice);
+invoice.openWallet();
 
 // or open the invoice in a native browser
-bitpay.openBrowser(invoice); // 
+invoice.openBrowser();
 
 // try openWallet first and default to browser on failure
-bitpay.openInvoice(invoice);
+invoice.open();
 ```
 
 ### Advance usage
