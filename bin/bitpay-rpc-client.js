@@ -37,7 +37,7 @@ var servers = {
     host: 'test.bitpay.com',
     port: 443
   }
-}
+};
 
 function parseServerOption(str){
 
@@ -62,7 +62,7 @@ function parseServerOption(str){
   return {
     host: host,
     port: port
-  }
+  };
 
 }
 
@@ -95,7 +95,7 @@ function promptEncryptionPassphrase(callback) {
     }
     callback(false);
   });
-};
+}
 
 function promptDecryptionPassphrase(callback) {
   return read({
@@ -107,8 +107,7 @@ function promptDecryptionPassphrase(callback) {
     }
     callback(input);
   });
-};
-
+}
 
 function checkErrors(errors){
   if ( errors.length > 0 ){
@@ -154,7 +153,7 @@ program
         var clientConfig = {
           host: server.host,
           port: server.port
-        }
+        };
 
         if ( cmd.insecure ) {
           clientConfig.insecure = true;
@@ -175,7 +174,7 @@ program
             token: responseData.token,
             label: responseData.label,
             identity: identity.info.id
-          }
+          };
 
           if ( responseData.resource ) {
             tokenData.resource = responseData.resource;
@@ -200,7 +199,7 @@ program
             process.exit();
           });
 
-        })
+        });
 
       }
 
@@ -281,8 +280,8 @@ program
 
         var clientConfig = {
           host: server.host,
-          port: server.port,
-        }
+          port: server.port
+        };
 
         if ( tokenObj && tokenObj.token ) {
           clientConfig.token = tokenObj.token;
@@ -309,7 +308,7 @@ program
             }));
           }
           process.exit();
-        })
+        });
 
       }
 
@@ -336,7 +335,7 @@ program
     if ( cmd.token ) {
       var tokenObj = {
         token: cmd.token
-      }
+      };
       if ( cmd.clientid ) {
         tokenObj.identity = cmd.clientid;
       }
@@ -347,7 +346,7 @@ program
       var query = {
         host: server.host,
         facade: cmd.facade
-      }
+      };
       if ( cmd.resource ) {
         facade.resource = cmd.resource
       }
@@ -361,7 +360,7 @@ program
       }
     }
 
-  })
+  });
 
 program.parse(process.argv);
 

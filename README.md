@@ -17,7 +17,7 @@ Please go to https://bitpay.com to create an account. You can also create a deve
 
 ### 2. Generate an Application Token
 
-Go to [My Account > API Tokens](https://bitpay.com/api-tokens) section. Click on the _Add New Token_ button and make a token with the `Point-of-Sale` capability for multiple clients. You can then include this token with your application.
+Go to [My Account > API Tokens](https://bitpay.com/api-tokens) section. Click on the _Add New Token_ button and make a token with the `Point-of-Sale` capability without client authentication. You can then include this token with your application for distribution.
 
 ## Sample Code and Usage
 
@@ -92,7 +92,7 @@ invoice.open();
 ```
 
 ### Advance usage
-Under the hood, the SDK works thanks to a powerful RPC client that you can also use. To use more of the advanced capabilities, such as the merchant facade, you'll need to pair the client.
+Under the hood, the SDK works thanks to a powerful RPC client that you can also use. To use more of the advanced capabilities, such as the merchant facade, you'll need to pair the client. You can also use the included [command line tool](docs/cli.md) to explore more of the API.
 
 ```javascript
 var Client = cordova.require('com.bitpay.sdk.cordova.RPCClient')

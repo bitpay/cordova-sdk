@@ -9,7 +9,7 @@ $ npm install
 
 $ cd bin
 
-$ ./bitpay.js pair -S test -F merchant
+$ ./bitpay-rpc-client.js pair -S test -F merchant
 
 ```
 
@@ -18,13 +18,13 @@ The `-S` option is the name of the server, it can be `test` or `live`. The `-F` 
 Create an invoice:
 
 ```bash
-$ ./bitpay.js call -S test -F merchant -M createInvoice -P '{"price": 100.00, "currency": "USD"}'
+$ ./bitpay-rpc-client.js call -S test -F merchant -M createInvoice -P '{"price": 100.00, "currency": "USD"}'
 ```
 
 Create tokens for application distribution:
 
 ```bash
-$ ./bitpay.js call -S test -F merchant -M createPublicPOSToken
+$ ./bitpay-rpc-client.js call -S test -F merchant -M createPublicPOSToken
 ```
 
 To read more API calls that are possible please refer to the included [API documentation](docs/api.md)

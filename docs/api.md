@@ -455,7 +455,7 @@ Status          | Description
 -------------   | -------------
 new             | The invoice has not yet been fully paid
 paid            | Received payment however has not yet been fully confirmed
-complete        | Payment confirmed by BitPay and invoice has been credit
+complete        | Payment confirmed by BitPay and invoice has been credited to the ledger
 confirmed       | Payment confirmed based on the `transaction` speed settings for the invoice
 expired         | Can no longer receive payments
 invalid         | The invoice has received payment, however was invalid
@@ -666,10 +666,7 @@ Example Response:
 ]
 ```
 
-### Undocumented
-- createBill
-- getBills
-- getBillById
+### Additional
 - [getInvoiceBusToken](#getinvoicebustoken) *(see public)*
 - [getInvoiceSettings](#getinvoicesettings) *(see point-of-sale)*
 - [createInvoice](#createinvoice) *(see point-of-sale)*
@@ -851,10 +848,3 @@ Example Response:
 "Success"
 ```
 
-### Undocumented
-
-- getOrphans
-- applyTx
-- getTxRequest
-- getTxRequests
-- get
