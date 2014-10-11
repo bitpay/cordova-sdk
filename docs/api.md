@@ -673,7 +673,7 @@ Example Response:
 
 ## Merchant/Invoice
 
-To use the *merchant* capabilities on an *invoice* resource, you'll need to get a token for the `getInvoice` call, as documented above in the (Merchant)[#getinvoice] section. When using this token, the following capabilities will be available for acting upon an invoice.
+To use the *merchant* capabilities on an *invoice* resource, you'll need to get a token for the `getInvoice` call, as documented above in the [Merchant](#getinvoice) section. When using this token, the following capabilities will be available for acting upon an invoice.
 
 ### refund
 

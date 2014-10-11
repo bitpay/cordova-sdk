@@ -12,7 +12,7 @@ $ cordova plugin add https://github.com/bitpay/cordova-sdk.git
 
 ## Setup Credentials
 
-### 1. Create a Bitpay Account
+### 1. Create a BitPay Account
 Please go to https://bitpay.com to create an account. You can also create a development account at [https://test.bitpay.com](https://test.bitpay.com/start).
 
 ### 2. Generate an Application Token
@@ -33,7 +33,7 @@ var bitpay = new Bitpay({
     });
 ```
 
-### Creating a new invoice
+### Creating a New Invoice
 
 ```javascript
 bitpay.createInvoice({
@@ -58,7 +58,7 @@ bitpay.createInvoice({
 });
 ```
 
-### Get an invoice
+### Get an Invoice
 
 ```javascript
 bitpay.getInvoice({
@@ -71,7 +71,7 @@ bitpay.getInvoice({
 });
 ```
 
-### Check if the user has a wallet installed
+### Check for Wallet
 
 ```javascript
 bitpay.isWalletAvailable(function(available) {
@@ -79,7 +79,7 @@ bitpay.isWalletAvailable(function(available) {
 });
 ```
 
-### Display invoice
+### Display Invoice
 ```javascript
 // launch an intent to open it on a native wallet
 invoice.openWallet();
@@ -91,19 +91,19 @@ invoice.openBrowser();
 invoice.open();
 ```
 
-### Advance usage
+### Advance Usage
 Under the hood, the SDK works thanks to a powerful RPC client that you can also use. To use more of the advanced capabilities, such as the merchant facade, you'll need to pair the client. You can also use the included [command line tool](docs/cli.md) to explore more of the API.
 
 ```javascript
 var Client = cordova.require('com.bitpay.sdk.cordova.RPCClient')
 
-var pos = new Client({
+var client = new Client({
         host: 'test.bitpay.com',
         port: 443,
-        token: '70163c90f...' // any type of token, point-of-sale in the example below
+        token: '70163c90f...' // any type of token
     });
 
-public.callMethod(..., function(error, data){
+client.callMethod(..., function(error, data){
   ...
 });
 ```

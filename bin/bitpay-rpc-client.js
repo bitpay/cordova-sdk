@@ -5,8 +5,6 @@
 *
 * A JavaScript library for making BitPay API RPC requests with Node.js
 *
-* @example
-*
 */
 
 var program = require('commander');
@@ -70,7 +68,7 @@ function promptEncryptionPassphrase(callback) {
   var passphrase = null;
 
   return read({
-    prompt: 'Encrypt Client ID Passphrase: ',
+    prompt: 'Enter Passphrase to Encrypt Client ID: ',
     silent: true
   }, function(err, input) {
     if (err) {

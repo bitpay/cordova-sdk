@@ -1,4 +1,4 @@
-# Advance Usage
+# Advanced Usage
 
 ## Module Overview
 
@@ -19,8 +19,8 @@ This plugin provides several modules that can be included in your application.
 
 ### Invoices
 
-- `lib/invoice.js` subscribe to payment events and generate QR Codes.
-- `lib/bitpay.js` SDK entry point, it wraps the api client and provides open invoice capabilities.
+- `lib/invoice.js` subscribe to payment events and generate QR Codes
+- `lib/bitpay.js` SDK entry point, it wraps the API client and provides invoice capabilities
 
 ## Using the API Client
 
