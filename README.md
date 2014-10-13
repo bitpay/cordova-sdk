@@ -21,7 +21,7 @@ Go to [My Account > API Tokens](https://bitpay.com/api-tokens) section. Click on
 
 ## Sample Code and Usage
 
-### Creating a BitPay client
+### Creating a BitPay Client
 
 ```javascript
 var Bitpay = cordova.require('com.bitpay.sdk.cordova.Bitpay');
@@ -71,7 +71,7 @@ bitpay.getInvoice({
 });
 ```
 
-### Check for Wallet
+### Check if a Bitcoin Wallet is Available
 
 ```javascript
 bitpay.isWalletAvailable(function(available) {

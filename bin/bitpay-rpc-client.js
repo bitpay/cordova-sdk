@@ -117,7 +117,7 @@ function checkErrors(errors){
 }
 
 program
-  .version('0.0.1');
+  .version('0.1.0');
 
 program
   .command('pair')
