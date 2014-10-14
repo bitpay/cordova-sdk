@@ -48,6 +48,9 @@ bitpay.createInvoice({
     var paid = invoice.data.btcPaid;
   })
 
+  // launch an intent to open it on a native wallet
+  invoice.openWallet();
+
   // get the invoice url
   var url = invoice.data.url;
 
@@ -77,18 +80,6 @@ bitpay.getInvoice({
 bitpay.isWalletAvailable(function(available) {
     // e.g. enable open wallet button.
 });
-```
-
-### Display Invoice
-```javascript
-// launch an intent to open it on a native wallet
-invoice.openWallet();
-
-// or open the invoice in a native browser
-invoice.openBrowser();
-
-// try openWallet first and default to browser on failure
-invoice.open();
 ```
 
 ### Advance Usage
