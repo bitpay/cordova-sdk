@@ -240,4 +240,4 @@ config.getToken(query, function(err, tokenObj){
 ```
 
 ## API Documentation
-To read more about the API refer to the included [API documentation](docs/api.md)
+To read more about the API refer to the included [API documentation](api.md)

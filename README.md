@@ -48,7 +48,7 @@ bitpay.createInvoice({
     var paid = invoice.data.btcPaid;
   })
 
-  // launch an intent to open it on a native wallet
+  // open a native wallet with a signed payment request
   invoice.openWallet();
 
   // get the invoice url

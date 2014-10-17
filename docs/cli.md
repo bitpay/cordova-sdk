@@ -27,4 +27,4 @@ Create tokens for application distribution:
 $ ./bitpay-rpc-client.js call -S test -F merchant -M createPublicPOSToken
 ```
 
-To read more API calls that are possible please refer to the included [API documentation](docs/api.md)
+To read more API calls that are possible please refer to the included [API documentation](api.md)
