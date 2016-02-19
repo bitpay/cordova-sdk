@@ -13,7 +13,7 @@ $ cordova plugin add https://github.com/bitpay/cordova-sdk.git
 ## Setup Credentials
 
 ### 1. Create a BitPay Account
-Please go to https://bitpay.com to create an account. You can also create a development account at [https://test.bitpay.com](https://test.bitpay.com/start).
+Please go to https://bitpay.com to create an account. You can also create a development account at [https://test.bitpay.com](https://test.bitpay.com/dashboard/signup).
 
 ### 2. Generate an Application Token
 
@@ -112,7 +112,7 @@ To read more about invoices refer to the included [API documentation](docs/api.m
 
 ## Troubleshooting
 
-Contact support via [our official helpdesk](https://support.bitpay.com) or [ask the community](https://github.com/bitpay/cordova-sdk/issues).
+Contact support via [our official helpdesk](https://help.bitpay.com) or [ask the community](https://github.com/bitpay/cordova-sdk/issues).
 
 ## License
 
