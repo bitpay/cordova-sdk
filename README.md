@@ -1,4 +1,5 @@
 # BitPay Cordova SDK
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/bitpay/cordova-sdk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 This SDK allows your application to quickly create an invoice, show the user an option to pay you, and track the status of the payment. Accept bitcoins in your app with 10 lines of code!
 
