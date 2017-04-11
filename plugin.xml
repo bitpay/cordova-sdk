@@ -67,6 +67,4 @@
     </js-module>
 
     <dependency id="com.philmerrell.cordova.canopen" url="https://github.com/philbot5000/CanOpen" commit="d310db1e943e855a2be9724eb4f9f4542915d615" />
-
-    <!--dependency id="org.apache.cordova.inappbrowser" url="https://github.com/apache/cordova-plugin-inappbrowser" /-->
 </plugin>
