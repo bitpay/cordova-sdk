@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:rim="http://www.blackberry.com/ns/widgets"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    id="com.bitpay.sdk.cordova"
+    id="com.bitpay.sdk.cordova.noiab"
     version="0.1">
     <name>BitPay SDK without InAppBrowser</name>
     <description>This plugin includes tools for interacting with the BitPay API</description>
