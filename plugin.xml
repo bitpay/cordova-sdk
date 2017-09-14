@@ -2,9 +2,9 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:rim="http://www.blackberry.com/ns/widgets"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    id="com.bitpay.sdk.cordova"
+    id="com.bitpay.sdk.cordova.noiab"
     version="0.1">
-    <name>BitPay SDK</name>
+    <name>BitPay SDK without InAppBrowser</name>
     <description>This plugin includes tools for interacting with the BitPay API</description>
     <license>MIT License, see LICENSE.md for details</license>
 
@@ -67,6 +67,4 @@
     </js-module>
 
     <dependency id="com.philmerrell.cordova.canopen" url="https://github.com/philbot5000/CanOpen" commit="d310db1e943e855a2be9724eb4f9f4542915d615" />
-
-    <dependency id="org.apache.cordova.inappbrowser" url="https://github.com/apache/cordova-plugin-inappbrowser" commit="8012ae709bb749eaad434c05cd7e2aeda8f3a425" />
 </plugin>
