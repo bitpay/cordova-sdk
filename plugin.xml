@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.bitpay.sdk.cordova"
     version="0.1">
-    <name>BitPay SDK</name>
+    <name>BitPay SDK without InAppBrowser</name>
     <description>This plugin includes tools for interacting with the BitPay API</description>
     <license>MIT License, see LICENSE.md for details</license>
 
