@@ -1,72 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-    xmlns:rim="http://www.blackberry.com/ns/widgets"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    id="com.bitpay.sdk.cordova"
-    version="0.1">
+<plugin 
+    xmlns="http://apache.org/cordova/ns/plugins/1.0" 
+    xmlns:rim="http://www.blackberry.com/ns/widgets" 
+    xmlns:android="http://schemas.android.com/apk/res/android" id="com.bitpay.sdk.cordova" version="0.1">
     <name>BitPay SDK</name>
     <description>This plugin includes tools for interacting with the BitPay API</description>
     <license>MIT License, see LICENSE.md for details</license>
-
     <engines>
         <engine name="cordova" version="&gt;=3.0.0" />
     </engines>
-
     <!-- uncomment to run tests
-    <asset src="node_modules/mocha/mocha.css" target="mocha.css" />
-    <asset src="node_modules/mocha/mocha.js" target="mocha.js" />
-    <asset src="node_modules/chai/chai.js" target="chai.js" />
-    <asset src="test/test.config.js" target="test.config.js" />
-    <asset src="test/test.rpc-client.js" target="test.rpc-client.js" />
-    <asset src="test/test.client-id.js" target="test.client-id.js" />
-    <asset src="test/test.request.js" target="test.request.js" />
-    <asset src="test/test.json-storage.js" target="test.json-storage.js" />
-    <asset src="test/test.invoice.js" target="test.invoice.js" />
-    <asset src="test/test.bitpay.js" target="test.bitpay.js" />
-    <asset src="test/test.html" target="index.html" />
+    <asset src="node_modules/mocha/mocha.css" target="mocha.css" /><asset src="node_modules/mocha/mocha.js" target="mocha.js" /><asset src="node_modules/chai/chai.js" target="chai.js" /><asset src="test/test.config.js" target="test.config.js" /><asset src="test/test.rpc-client.js" target="test.rpc-client.js" /><asset src="test/test.client-id.js" target="test.client-id.js" /><asset src="test/test.request.js" target="test.request.js" /><asset src="test/test.json-storage.js" target="test.json-storage.js" /><asset src="test/test.invoice.js" target="test.invoice.js" /><asset src="test/test.bitpay.js" target="test.bitpay.js" /><asset src="test/test.html" target="index.html" />
     -->
-
     <js-module src="dist/bitauth.browser.min.js" name="BitAuth">
-       <runs/>
+        <runs/>
     </js-module>
-
     <js-module src="dist/qrcode.js" name="QRCode">
         <runs/>
     </js-module>
-
     <js-module src="dist/aes.js" name="CryptoJS">
         <runs/>
     </js-module>
-
     <js-module src="lib/client-id.js" name="ClientId">
         <runs/>
     </js-module>
-
     <js-module src="lib/json-localstorage.js" name="JSONLocalstorage">
         <runs/>
     </js-module>
-
     <js-module src="lib/config.js" name="Config">
         <runs/>
     </js-module>
-
     <js-module src="lib/request-xhr.js" name="requestXHR">
         <runs/>
     </js-module>
-
     <js-module src="lib/rpc-client.js" name="RPCClient">
         <runs/>
     </js-module>
-
     <js-module src="lib/invoice.js" name="Invoice">
         <runs/>
     </js-module>
-
     <js-module src="lib/bitpay.js" name="Bitpay">
         <runs/>
     </js-module>
-
-    <dependency id="com.philmerrell.cordova.canopen" url="https://github.com/philbot5000/CanOpen" commit="d310db1e943e855a2be9724eb4f9f4542915d615" />
-
-    <dependency id="org.apache.cordova.inappbrowser" url="https://github.com/apache/cordova-plugin-inappbrowser" commit="8012ae709bb749eaad434c05cd7e2aeda8f3a425" />
 </plugin>
